@@ -252,3 +252,9 @@
 - 작업: AnswerForm(record, @NotBlank) + @Valid, BindingResult, 검증 실패 시 question을 모델에 담아 상세 화면 다시 표시, 상세 화면 답변 폼에 th:object=answerForm, th:field, 에러 프래그먼트 적용, 빈 답변 테스트 추가
 - 이유: 빈 답변이 저장되지 않도록 서버에서 반드시 검증(14168 35강), 질문 폼과 같은 에러 표시 방식 재사용
 - 결과: ./gradlew test 27건 통과(공백 답변 -> question_detail 다시 표시, 답변 수 변화 없음)
+
+### 017-01 내비게이션 바, 레이아웃에 navbar 프래그먼트 추가
+- [링크](https://github.com/jhs512/jsb-plus/commit/017-01)
+- 작업: navbar.html(th:fragment) 추가: 로고(SBB), 질문 목록 링크, 좁은 화면용 토글 버튼, layout.html에서 th:replace로 모든 페이지에 포함
+- 이유: 모든 페이지 공통 메뉴를 한 파일에서 관리(교재 3-01)
+- 결과: ./gradlew test 27건 통과, /question/list 응답에 navbar-brand 포함 확인
