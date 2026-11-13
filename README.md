@@ -24,3 +24,9 @@
 - 작업: Spring Boot 4.1.2, Java 25, Gradle Kotlin DSL(build.gradle.kts), 의존성: webmvc, lombok, devtools, 그룹 com.mysite, 메인 클래스 com.mysite.sbb.SbbApplication
 - 이유: 교재(Boot 3.2.1, Groovy) 대신 14163 강의의 최신 환경 적용
 - 결과: ./gradlew test 통과(contextLoads)
+
+### 001-02 프로젝트 생성, application.yaml로 설정 파일 변경
+- [링크](https://github.com/jhs512/jsb-plus/commit/001-02)
+- 작업: application.properties를 application.yaml로 변경, 콘솔 컬러 출력(ansi) 활성화
+- 이유: 계층 구조라 설정이 많아져도 읽기 쉬움(14163·14168 방식)
+- 결과: ./gradlew test 통과
