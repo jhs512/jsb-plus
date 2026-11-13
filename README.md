@@ -240,3 +240,9 @@
 - 작업: validation 의존성 추가, QuestionForm(record) + @NotBlank, @Size, @ModelAttribute("form") @Valid + BindingResult로 실패 시 폼 다시 표시, th:object, th:field로 입력값 유지, #fields.allErrors로 에러 출력
 - 이유: 교재의 class + Getter/Setter 폼 대신 record로 코드 축소(14168 40강), BindingResult가 없으면 검증 실패 시 바로 400 예외(14168 13강), 에러 메시지에 순번-필드명을 붙여 다음 작업에서 정렬, focus에 사용
 - 결과: ./gradlew test 26건 통과(빈 제목 -> 200 question_form, subject 필드 에러, 입력한 내용 유지), 현재 화면에는 01-subject- 접두어가 그대로 보임(다음 커밋에서 처리)
+
+### 016-03 질문 등록, 에러 메시지 프래그먼트(정렬, 첫 에러 필드 focus)
+- [링크](https://github.com/jhs512/jsb-plus/commit/016-03)
+- 작업: form_errors.html 프래그먼트: 순번으로 정렬, 순번-필드명 접두어 제거 후 출력, data-error-field-name 속성, 첫 에러 필드 focus 스크립트를 document.currentScript.closest('form') + DOMContentLoaded 방식으로 구현
+- 이유: 여러 폼에서 재사용하는 에러 표시(14168 23~25강), 강사 방식(마지막 form + setTimeout)은 프래그먼트가 폼 맨 위에 있으면 입력칸이 아직 없어 콘솔 에러가 남(브라우저에서 확인 후 개선)
+- 결과: ./gradlew test 26건 통과, 브라우저: 빈 폼 제출 시 메시지 2개가 순번대로 표시, 제목만 입력 후 제출 시 입력값 유지, 커서가 내용 textarea로 이동, 콘솔 에러 없음
