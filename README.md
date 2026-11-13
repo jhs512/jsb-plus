@@ -192,3 +192,9 @@
 - 작업: QuestionController에 @RequestMapping("/question"), 액션 메서드는 /list, /detail/{id}만 표기
 - 이유: 공통 URL 앞부분을 한 곳에서 관리(교재 2-11)
 - 결과: ./gradlew test 22건 통과(URL 변화 없음)
+
+### 012-01 답변 기능, 상세 화면에 답변 작성 폼 추가
+- [링크](https://github.com/jhs512/jsb-plus/commit/012-01)
+- 작업: question_detail.html에 textarea(name=content)와 POST 폼 추가
+- 이유: 폼은 사용자가 입력한 값으로 요청(URL + 파라미터)을 만들어 주는 도구(14168 3강), 데이터를 생성하므로 GET이 아닌 POST(14168 7강)
+- 결과: /question/detail/2 화면에 답변 폼 렌더링 확인(템플릿만 변경)
