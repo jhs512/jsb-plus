@@ -408,3 +408,9 @@
 - 작업: Comment 엔티티(author, content, question 또는 answer) 추가, Question, Answer에 comments(@OneToMany PERSIST, REMOVE, orphanRemoval)와 addComment, deleteComment, CommentController: POST /comment/create/question/{id}, /comment/create/answer/{id}, DELETE /comment/delete/{id}, comment_fragment.html(질문, 답변 공용) + global.js의 Comment__submitWriteForm 클라이언트 검증, CommentControllerTest 4건
 - 이유: 도전과제 3-14 댓글 기능, 14168 PostComment 방식(엔티티 메서드로 추가, 부모 목록에서 제거하면 orphanRemoval로 삭제), 클라이언트 검증은 빠른 피드백, 서버 검증은 필수(14168 35·36강)
 - 결과: ./gradlew test 60건 통과(질문 댓글 표시, 답변 댓글 후 #answer_1 이동, 빈 댓글 400, 남의 댓글 삭제 403, 본인 삭제 후 DB에서 사라짐)
+
+### 032-01 카테고리, 질문 카테고리(질문답변/자유게시판/강좌)
+- [링크](https://github.com/jhs512/jsb-plus/commit/032-01)
+- 작업: Category 엔티티(code, name), CategoryRepository, CategoryService 추가, Question.category(@ManyToOne LAZY), 생성자와 modify에 category, 검색 JPQL에 (:category is null or q.category = :category) 조건, 목록: 카테고리 탭, 배지, 페이지·검색 링크에 category 유지, 질문 폼: 카테고리 select(필수), 내비게이션 바에 카테고리 메뉴, GlobalModelAttribute에 categories, 샘플 데이터: 카테고리 3개, 샘플 질문은 qna, dev 대량 데이터는 free
+- 이유: 도전과제 3-14 카테고리 기능, 게시판 종류를 코드가 아닌 데이터(엔티티)로 관리해 추가가 쉽도록, URL에는 id 대신 의미 있는 code 사용
+- 결과: ./gradlew test 61건 통과(qna 필터에 샘플 질문, free 필터에 없음, 수정 시 카테고리 변경), 브라우저에서 카테고리 탭(전체/질문답변/자유게시판/강좌)과 질문답변 필터 결과 2건 확인
