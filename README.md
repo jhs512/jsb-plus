@@ -198,3 +198,9 @@
 - 작업: question_detail.html에 textarea(name=content)와 POST 폼 추가
 - 이유: 폼은 사용자가 입력한 값으로 요청(URL + 파라미터)을 만들어 주는 도구(14168 3강), 데이터를 생성하므로 GET이 아닌 POST(14168 7강)
 - 결과: /question/detail/2 화면에 답변 폼 렌더링 확인(템플릿만 변경)
+
+### 012-02 답변 기능, 답변 저장 처리
+- [링크](https://github.com/jhs512/jsb-plus/commit/012-02)
+- 작업: AnswerController: POST /answer/create/{id}, @Transactional, AnswerService.create -> question.addAnswer(content), 저장 후 상세 페이지로 redirect, 컨트롤러 테스트 추가
+- 이유: 교재는 answerRepository.save를 쓰지만 강사처럼 OneToMany 필드로 생성(14163 37강), POST 처리 후 redirect로 새로고침 중복 등록 방지(14168 28강)
+- 결과: ./gradlew test 23건 통과(302 /question/detail/2, 질문 2의 답변 목록에 새 답변 포함)
