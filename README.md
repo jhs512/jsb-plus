@@ -114,3 +114,9 @@
 - 작업: @Transactional 테스트로 LAZY 컬렉션 조회 성공 확인, 수정(더티체킹 + flush), 삭제, cascade REMOVE 테스트 추가
 - 이유: 테스트 메서드 전체를 트랜잭션으로 묶으면 DB 연결이 유지되고, 끝나면 롤백되어 테스트끼리 독립(14163 18·25강)
 - 결과: ./gradlew test 16건 통과, 수정 테스트 이후에도 다른 테스트가 원래 제목을 조회함(롤백 확인)
+
+### 005-06 리포지터리, 답변 생성 2가지 방법 비교(save vs addAnswer)
+- [링크](https://github.com/jhs512/jsb-plus/commit/005-06)
+- 작업: Question.addAnswer(content) 엔티티 메서드 추가, TestInitData의 답변 생성을 addAnswer로 변경, AnswerRepositoryTest: save 방식, addAnswer 방식, 양방향 조회 테스트
+- 이유: 교재는 answerRepository.save를 사용, 강사는 객체지향적으로 question.addAnswer + cascade PERSIST(더티체킹으로 자동 INSERT) 사용(14163 21강)
+- 결과: ./gradlew test 19건 통과, addAnswer 직후 id=0, flush 후 id 생성되는 것으로 INSERT 시점 확인
