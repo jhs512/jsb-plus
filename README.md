@@ -72,3 +72,9 @@
 - 작업: Question에 @OneToMany List<Answer> answers 추가(mappedBy 없이)
 - 이유: mappedBy가 없으면 JPA가 두 관계를 별개로 보고 중간 테이블을 만든다는 것을 직접 확인(14163 11강)
 - 결과: DDL 로그에서 불필요한 question_answers(question_id, answers_id) 테이블 생성 확인
+
+### 004-04 엔티티, mappedBy와 cascade로 OneToMany 완성
+- [링크](https://github.com/jhs512/jsb-plus/commit/004-04)
+- 작업: @OneToMany(mappedBy = "question", cascade = {PERSIST, REMOVE}), answers를 new ArrayList<>()로 초기화
+- 이유: 관계의 주인을 Answer.question으로 지정해 중간 테이블 제거(14163 12강), 답변 자동 저장, 삭제를 위한 cascade(14163 21강)
+- 결과: DDL 로그에서 question_answers 테이블이 사라짐 확인
