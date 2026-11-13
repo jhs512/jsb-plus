@@ -155,6 +155,12 @@ README 링크 형식: `https://github.com/jhs512/jsb-plus/commit/001-02`
 | 037 | 소셜 로그인 | OAuth2 Client. **클라이언트 ID·시크릿 발급과 입력은 직접 하셔야 합니다** |
 | 038 | 마크다운 에디터 | SimpleMDE(또는 후속 EasyMDE)를 cdnjs로 적용 |
 
+### 추가 개선 (038 이후)
+| 번호 | 작업 | 내용 |
+|---|---|---|
+| 039 | 마무리 | README 실행 방법·구조·개선 요약 |
+| 040 | 테스트 프로파일 강제 | `build.gradle.kts`의 `tasks.withType<Test>`에 `systemProperty("spring.profiles.active", "test")` → `@ActiveProfiles("test")`를 빠뜨린 테스트도 메모리 DB 사용 |
+
 ---
 
 ## 5. 작업 하나의 사이클 (모든 세부 작업에 동일하게 적용)

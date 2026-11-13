@@ -514,3 +514,9 @@ com.mysite.sbb
 - 작업: README에 기술 스택, 실행 방법(개발용 계정, H2 콘솔, 비밀 설정), 패키지 구조, 교재 대비 개선 표, 검증하지 못한 부분 추가
 - 이유: 결과물을 처음 보는 사람도 실행하고 이해할 수 있도록, 검증 범위를 정직하게 기록
 - 결과: ./gradlew test 73건 전체 통과
+
+### 040-01 테스트 프로파일 강제, Gradle 테스트 태스크에 test 프로파일 지정
+- [링크](https://github.com/jhs512/jsb-plus/commit/040-01)
+- 작업: build.gradle.kts의 tasks.withType<Test>에 systemProperty("spring.profiles.active", "test") 추가, @ActiveProfiles 없는 검증용 테스트(DefaultTestProfileTest) 추가, PLAN 로드맵에 039, 040 추가
+- 이유: @ActiveProfiles("test")를 빠뜨리면 기본 프로파일(dev)이 적용되어 테스트가 개발용 파일 DB(db_dev)를 읽고 쓰게 됨, 실수 하나로 개발 데이터가 오염되지 않도록 테스트 기본값을 test로 고정
+- 결과: 설정 전: DefaultTestProfileTest 실패(datasource url = jdbc:h2:./db_dev), 설정 후: ./gradlew test 74건 전체 통과(jdbc:h2:mem:)
