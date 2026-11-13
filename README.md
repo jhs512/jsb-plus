@@ -174,3 +174,9 @@
 - 작업: QuestionService.getQuestion(id) 추가, GET /question/detail/{id}, question_detail.html 추가, 상세 화면 테스트 추가
 - 이유: 질문 하나의 제목과 내용을 보여주는 화면(교재 2-10, 14163 35강 1단계), @PathVariable로 URL 경로의 값을 받는 방법 학습
 - 결과: ./gradlew test 21건 통과
+
+### 010-02 상세 페이지, 목록의 제목을 상세 페이지에 연결
+- [링크](https://github.com/jhs512/jsb-plus/commit/010-02)
+- 작업: question_list.html 제목에 th:href="@{, /question/detail/${question.id}, }" 링크 추가
+- 이유: 목록에서 클릭해 상세로 이동(교재 2-10, 14163 35강 2단계), @{}(URL 생성)와 , , (문자열 치환) 문법 비교
+- 결과: ./gradlew test 21건 통과(목록 HTML에 href=/question/detail/2 포함)
