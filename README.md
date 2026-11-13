@@ -3,7 +3,8 @@
 『점프 투 스프링부트』(SBB)를 구현하면서 장희성 강사의 14163(점프 투 스프링부트 개선), 14168(JPA·타임리프 개선) 수업 내용을 적용한 프로젝트입니다.
 
 - 진행 계획과 결정 사항: [docs/PLAN.md](docs/PLAN.md)
-- 커밋 규칙: `기능번호(3자리)-세부번호(2자리) 기능명, 작업` + 같은 이름의 태그 (예: [`016-03`](https://github.com/jhs512/jsb-plus/commit/016-03))
+- 커밋별 실행 화면 63장: [docs/CAPTURES.md](docs/CAPTURES.md) (계획: [docs/CAPTURE_PLAN.md](docs/CAPTURE_PLAN.md))
+- 커밋 규칙: `기능번호(3자리)-세부번호(2자리) 기능명, 작업` + 같은 이름의 태그 (예: [`016-03`](https://github.com/jhs512/jsb-plus/commit/016-03)), 커밋 순번 태그 `001`, `002`, … 도 함께 붙임
 
 ## 기술 스택
 - Java 25, Spring Boot 4.1.2, Gradle(Kotlin DSL)
@@ -532,3 +533,9 @@ com.mysite.sbb
 - 작업: spring.config.import(optional:file:./application-secret.yaml)를 application.yaml에서 application-dev.yaml로 이동, README 실행 방법과 검증 범위 갱신
 - 이유: 로컬에 실제 application-secret.yaml이 생기자 테스트도 그 파일을 읽어 소셜 버튼 없음 테스트가 실패함, 테스트는 개인 비밀 설정과 무관하게 항상 같은 결과가 나와야 함(040-01과 같은 취지)
 - 결과: ./gradlew test 75건 전체 통과(비밀 파일이 있어도 test는 읽지 않음), dev 실행에서는 로그인 화면에 Google로 로그인 버튼 유지
+
+### 041-01 실행 캡처, 커밋별 실행 화면 기록
+- [링크](https://github.com/jhs512/jsb-plus/commit/041-01)
+- 작업: docs/CAPTURE_PLAN.md: 79개 커밋 중 실행 변화가 있는 53개 선별, 캡처 방식 정리, docs/captures: 순번 태그별로 빈 DB 실행 후 브라우저 화면, H2 콘솔 SQL 결과 63장(JPG, 4.8MB), docs/CAPTURES.md: 커밋 링크와 설명이 있는 캡처 목록, README에 링크와 순번 태그 규칙 추가
+- 이유: 커밋을 따라가며 코드가 실행 결과를 어떻게 바꾸는지 한눈에 보기 위함, 테이블 구조, 샘플 데이터처럼 화면에 안 보이는 변화는 H2 콘솔로 기록
+- 결과: 임시 worktree에서 태그를 하나씩 체크아웃해 실행(8092 포트) 후 ego lite로 자동 캡처, 63장 전체를 직접 열어 확인, 초기 데이터 생성 전에 찍힌 2장(065 검색, 068 카테고리)은 대기 후 다시 캡처, 코드 변경 없음(테스트 재실행 안 함)
