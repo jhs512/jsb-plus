@@ -103,7 +103,7 @@ class QuestionRepositoryTest {
     @Transactional
     void t10() {
         Question q = questionRepository.findById(1).get();
-        q.setSubject("수정된 제목");
+        q.modify("수정된 제목", q.getContent());
         questionRepository.flush(); // UPDATE 를 지금 바로 실행 (로그로 확인용)
 
         assertThat(questionRepository.findById(1).get().getSubject()).isEqualTo("수정된 제목");

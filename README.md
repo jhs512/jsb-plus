@@ -162,3 +162,9 @@
 - 작업: QuestionService(getList) 추가, 컨트롤러가 리포지터리 대신 서비스를 사용
 - 이유: 컨트롤러(요청/응답), 서비스(업무 로직), 리포지터리(DB 접근) 역할 분리(교재 2-09), 여러 컨트롤러가 같은 로직을 재사용할 수 있음
 - 결과: ./gradlew test 20건 통과
+
+### 009-02 서비스, 엔티티 @Setter 제거하고 생성자와 의미 있는 메서드로 변경
+- [링크](https://github.com/jhs512/jsb-plus/commit/009-02)
+- 작업: Question, Answer의 @Setter 제거, @NoArgsConstructor(PROTECTED) + 필요한 값을 받는 생성자 추가, modify() 메서드 추가, addAnswer는 new Answer(this, content) 사용, BaseInitData, 테스트를 생성자/modify 방식으로 수정
+- 이유: Setter가 열려 있으면 어디서든 값을 바꿀 수 있어 변경 지점을 추적하기 어려움, 값을 바꾸는 경로를 엔티티 메서드로 제한(14168 Post 엔티티 방식)
+- 결과: ./gradlew test 20건 통과
