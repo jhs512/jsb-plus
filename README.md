@@ -270,3 +270,9 @@
 - 작업: @Profile("dev") DevInitData: 질문 300개 생성, @Order로 BaseInitData(1) -> DevInitData(2) 실행 순서 지정
 - 이유: 페이징을 눈으로 확인하려면 데이터가 많아야 함(교재 3-02), 교재처럼 테스트 코드로 넣으면 개발 DB를 건드리게 되므로 dev 전용 초기 데이터로 분리, test 프로파일은 그대로 2개 유지
 - 결과: ./gradlew test 28건 통과(test에는 영향 없음), 빈 dev DB로 실행 후 1페이지에 테스트 데이터 10개, 31페이지에 sbb가 무엇인가요? 표시 확인
+
+### 019-01 게시물 번호, 전체 개수 기준 역순 번호
+- [링크](https://github.com/jhs512/jsb-plus/commit/019-01)
+- 작업: 번호 = totalElements - (number * size) - loop.index
+- 이유: loop.count는 페이지마다 1부터 다시 시작함, 최신 글이 가장 큰 번호를 갖도록 계산(교재 3-03)
+- 결과: dev DB(302개)에서 1페이지 첫 줄 302, 마지막 페이지 마지막 줄 1 확인, ./gradlew test 28건 통과
