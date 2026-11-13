@@ -360,3 +360,9 @@
 - 작업: 상세 화면의 질문, 답변 카드에 modifyDate가 createDate보다 나중일 때만 modified at 배지 표시
 - 이유: 교재는 modifyDate가 null이 아니면 표시하지만, Auditing은 생성 시에도 modifyDate를 채우므로 두 시각을 비교(교재 3-09 응용)
 - 결과: ./gradlew test 48건 통과, 브라우저에서 수정한 2번 질문에만 modified at 표시, 수정하지 않은 답변에는 표시 안 됨 확인
+
+### 026-01 추천, 질문과 답변 추천(POST)
+- [링크](https://github.com/jhs512/jsb-plus/commit/026-01)
+- 작업: Question, Answer에 @ManyToMany Set<SiteUser> voters와 vote() 추가(question_voters, answer_voters 중간 테이블), POST /question/vote/{id}, POST /answer/vote/{id}, 상세 화면에 추천 버튼(a[method=POST] + confirm)과 추천 수, 테스트 2건
+- 이유: 교재 3-10 추천 기능, 교재의 GET 추천 대신 POST(PLAN 결정 2), Set + id 기반 equals로 같은 사람의 중복 추천 방지
+- 결과: ./gradlew test 50건 통과(같은 사용자가 두 번 추천해도 1표), DDL에서 question_voters(question_id, voters_id) 중간 테이블 생성 확인
