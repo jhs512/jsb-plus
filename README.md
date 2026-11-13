@@ -60,3 +60,9 @@
 - 작업: Question 엔티티(id, subject, content, createDate) 추가
 - 이유: 질문 데이터를 저장할 question 테이블을 JPA가 자동 생성하도록(교재 2-04)
 - 결과: bootRun 로그에서 create table question(id identity, subject varchar(200), content TEXT, create_date) 확인
+
+### 004-02 엔티티, Answer 엔티티와 ManyToOne(LAZY) 관계 추가
+- [링크](https://github.com/jhs512/jsb-plus/commit/004-02)
+- 작업: Answer 엔티티(id, content, createDate, question) 추가, @ManyToOne(fetch = LAZY)로 질문 참조
+- 이유: 답변은 반드시 하나의 질문에 속함(N:1), ManyToOne 기본값 EAGER는 불필요한 조회를 유발하므로 LAZY 명시(14163 25강)
+- 결과: DDL 로그에서 answer.question_id 컬럼과 question을 참조하는 외래키 제약 생성 확인
