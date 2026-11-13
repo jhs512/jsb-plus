@@ -150,3 +150,9 @@
 - 작업: question_list.html을 table(thead, tbody)로 변경, #temporals.format으로 작성일시 출력
 - 이유: 목록 데이터는 표 형태가 읽기 쉬움(14163 32강, 교재 2-07)
 - 결과: ./gradlew test 20건 통과, 브라우저에서 /question/list 표 출력 확인
+
+### 008-01 루트 URL, / 접속 시 질문 목록으로 리다이렉트
+- [링크](https://github.com/jhs512/jsb-plus/commit/008-01)
+- 작업: GET / 가 redirect:/question/list 반환, 테스트를 302, Location 검증으로 변경
+- 이유: 사이트 첫 화면을 질문 목록으로(교재 2-08), redirect는 서버가 직접 다른 페이지를 그리는 것이 아니라 브라우저에게 다시 요청하라고 알려 주는 것(14168 28강)
+- 결과: ./gradlew test 20건 통과(GET / -> 302, redirectedUrl=/question/list)
