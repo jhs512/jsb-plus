@@ -228,3 +228,9 @@
 - 작업: thymeleaf-layout-dialect 의존성 추가, layout.html(doctype, head, CDN 링크, body) 추가, 목록, 상세는 layout:decorate와 layout:fragment="content"로 본문만 작성, layout:title-pattern으로 페이지별 title(예: 질문 목록 ,  SBB)
 - 이유: 모든 페이지가 표준 HTML 구조를 갖추고, 공통 head를 한 곳에서 관리(교재 2-15), 페이지별 고유 title(14168 45강)
 - 결과: ./gradlew test 23건 통과, 응답 HTML에 doctype, <title>질문 목록 ,  SBB</title>, 부트스트랩 링크 포함 확인
+
+### 016-01 질문 등록, 등록 폼과 저장 처리
+- [링크](https://github.com/jhs512/jsb-plus/commit/016-01)
+- 작업: 목록에 질문 등록하기 버튼 추가, GET /question/create(폼), POST /question/create(저장 후 목록으로 redirect), QuestionService.create 추가, question_form.html 추가(label 안에 input을 넣는 방식), 등록 테스트 추가
+- 이유: 같은 URL을 GET(폼 보여주기), POST(처리)로 구분(14168 26강), action 생략 시 현재 URL로 전송(14168 26강), label 안에 input을 넣는 현대적 방식(14168 21강)
+- 결과: ./gradlew test 25건 통과(등록 후 목록에 새 질문 제목 표시)
