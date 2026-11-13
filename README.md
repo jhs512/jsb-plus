@@ -210,3 +210,9 @@
 - 작업: question_detail.html에 #lists.size(question.answers)로 답변 개수, th:each로 답변 목록 출력, 상세 화면 테스트에 답변 개수와 내용 검증 추가
 - 이유: OneToMany 필드 덕분에 리포지터리 없이 question.answers로 답변 목록 접근(14163 9강, 교재 2-12)
 - 결과: ./gradlew test 23건 통과, 브라우저에서 답변 등록 후 상세 화면으로 돌아와 2개의 답변 표시 확인
+
+### 013-01 웹 페이지 디자인, 스타일시트 적용
+- [링크](https://github.com/jhs512/jsb-plus/commit/013-01)
+- 작업: static/resource/style.css 추가(textarea 너비, 버튼 여백), 목록, 상세 템플릿에서 th:href="@{/resource/style.css}"로 연결
+- 이유: 정적 파일(CSS, JS, 이미지)은 static 폴더에서 그대로 제공됨(교재 2-13), 나중에 시큐리티에서 /resource/** 한 줄로 허용하기 위해 처음부터 resource 하위에 둠(14168 46강)
+- 결과: 앱 재시작 후 /resource/style.css 200 응답 확인, ./gradlew test 23건 통과
