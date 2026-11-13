@@ -102,3 +102,9 @@
 - 작업: findBySubject, findBySubjectAndContent, findBySubjectLike, findBySubjectIn, findByIdLessThanOrderByIdDesc 추가 및 테스트
 - 이유: 메서드 이름만으로 WHERE, AND, LIKE, IN, ORDER BY 조건이 생성되는 규칙 학습(교재 2-05, 14163 16·17강)
 - 결과: ./gradlew test 11건 통과, 테스트 로그에서 생성된 SQL 확인
+
+### 005-04 리포지터리, [실험] 트랜잭션 밖 LAZY 로딩은 실패한다
+- [링크](https://github.com/jhs512/jsb-plus/commit/005-04)
+- 작업: 트랜잭션 없이 question.getAnswers()에 접근하면 LazyInitializationException이 발생함을 검증하는 테스트 추가
+- 이유: LAZY는 실제로 필요할 때 SELECT 하지만, 그때 DB 연결이 열려 있어야 함을 확인(14163 25강)
+- 결과: ./gradlew test 12건 통과(예외 발생을 assertThatThrownBy로 확인)
