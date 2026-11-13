@@ -520,3 +520,9 @@ com.mysite.sbb
 - 작업: build.gradle.kts의 tasks.withType<Test>에 systemProperty("spring.profiles.active", "test") 추가, @ActiveProfiles 없는 검증용 테스트(DefaultTestProfileTest) 추가, PLAN 로드맵에 039, 040 추가
 - 이유: @ActiveProfiles("test")를 빠뜨리면 기본 프로파일(dev)이 적용되어 테스트가 개발용 파일 DB(db_dev)를 읽고 쓰게 됨, 실수 하나로 개발 데이터가 오염되지 않도록 테스트 기본값을 test로 고정
 - 결과: 설정 전: DefaultTestProfileTest 실패(datasource url = jdbc:h2:./db_dev), 설정 후: ./gradlew test 74건 전체 통과(jdbc:h2:mem:)
+
+### 037-02 소셜 로그인, OIDC(openid scope) 경로에서도 회원 연결
+- [링크](https://github.com/jhs512/jsb-plus/commit/037-02)
+- 작업: SocialOidcUserService(OidcUserService 상속): 구글 sub, email로 SiteUser 찾기/생성 후 principal 이름을 우리 username으로, SecurityConfig userInfoEndpoint에 oidcUserService 추가, SiteOidcUser 이름 검증 테스트
+- 이유: 실제 구글 로그인 테스트에서 발견한 버그: scope에 openid가 있으면 OAuth2UserService 대신 OidcUserService가 호출되어 SiteUser가 생성되지 않고 principal 이름이 구글 sub가 됨 -> /user/profile에서 siteuser not found(404), 가짜 client-id 테스트는 리다이렉트까지만 확인해서 놓쳤던 부분
+- 결과: ego lite에서 실제 구글 계정으로 로그인(Google Cloud jsb-plus 프로젝트, 테스트 사용자), 수정 전: 로그인 후 /user/profile 404, 수정 후: google_(번호) 회원 자동 생성, 프로필 이메일 표시, 소셜 계정으로 질문 작성 및 본인 수정·삭제 버튼 확인
