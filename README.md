@@ -132,3 +132,9 @@
 - 작업: TestInitData를 global/initData/BaseInitData로 이름 변경
 - 이유: 이 샘플 데이터는 테스트뿐 아니라 개발 환경(dev)에서도 쓰이므로 이름을 용도에 맞게 변경(14168 2강)
 - 결과: ./gradlew test 19건 통과
+
+### 007-01 질문 목록, 타임리프 없이 질문 목록 출력
+- [링크](https://github.com/jhs512/jsb-plus/commit/007-01)
+- 작업: QuestionController에 GET /question/list 추가, 자바 문자열로 ul, li HTML을 직접 만들어 응답, 컨트롤러 테스트 추가
+- 이유: 템플릿 엔진 없이 HTML을 만들면 얼마나 불편한지 먼저 경험(14163 27강)
+- 결과: ./gradlew test 20건 통과(목록에 샘플 질문 제목 2개 포함)
