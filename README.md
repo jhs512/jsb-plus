@@ -264,3 +264,9 @@
 - 작업: QuestionService.getList(page): PageRequest.of(page, 10, 작성일 내림차순), 컨트롤러에서 page 파라미터(기본값 0)를 받아 Page 객체 전달, 목록 템플릿에 이전/다음, 페이지 번호(현재 기준 앞뒤 5개) 추가, 페이징 테스트 추가
 - 이유: 글이 많아져도 한 번에 10개씩만 조회(LIMIT/OFFSET)(교재 3-02), 최신 글이 먼저 보이도록 정렬
 - 결과: ./gradlew test 28건 통과(27개 중 1페이지에 최신 글, 3페이지에 가장 오래된 글)
+
+### 018-02 페이징, 개발용 대량 데이터 생성(DevInitData)
+- [링크](https://github.com/jhs512/jsb-plus/commit/018-02)
+- 작업: @Profile("dev") DevInitData: 질문 300개 생성, @Order로 BaseInitData(1) -> DevInitData(2) 실행 순서 지정
+- 이유: 페이징을 눈으로 확인하려면 데이터가 많아야 함(교재 3-02), 교재처럼 테스트 코드로 넣으면 개발 DB를 건드리게 되므로 dev 전용 초기 데이터로 분리, test 프로파일은 그대로 2개 유지
+- 결과: ./gradlew test 28건 통과(test에는 영향 없음), 빈 dev DB로 실행 후 1페이지에 테스트 데이터 10개, 31페이지에 sbb가 무엇인가요? 표시 확인
