@@ -312,3 +312,9 @@
 - 작업: SecurityConfig에 PasswordEncoder(BCryptPasswordEncoder) 빈 추가, UserService.create: 비밀번호를 암호화해서 저장, UserServiceTest 추가
 - 이유: 비밀번호 원문을 저장하면 DB 유출 시 그대로 노출됨(교재 3-06), BCrypt는 salt를 섞어 같은 비밀번호도 매번 다른 해시가 됨
 - 결과: ./gradlew test 29건 통과(저장된 비밀번호가 원문과 다르고 $2a$ 형식, matches로 검증 성공)
+
+### 022-03 회원가입, 회원가입 폼과 검증
+- [링크](https://github.com/jhs512/jsb-plus/commit/022-03)
+- 작업: UserController: GET/POST /user/signup, UserCreateForm(record), 비밀번호 확인 불일치, 사용자ID·이메일 중복을 rejectValue로 필드 에러 처리, signup_form.html(에러 프래그먼트 재사용), navbar에 회원가입 링크, UserControllerTest 4건
+- 이유: 교재 3-06 회원가입, 교재는 저장 시 DB 예외를 잡아 전체 에러로 보여주지만, 저장 전에 중복을 확인해 어느 필드가 문제인지 알려주도록 개선, 에러 메시지는 순번-필드명-내용 형식을 그대로 사용해 정렬과 focus 유지
+- 결과: ./gradlew test 33건 통과(성공 302 /, 비밀번호 불일치, 중복 ID, 이메일 형식 오류)
