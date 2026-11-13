@@ -318,3 +318,9 @@
 - 작업: UserController: GET/POST /user/signup, UserCreateForm(record), 비밀번호 확인 불일치, 사용자ID·이메일 중복을 rejectValue로 필드 에러 처리, signup_form.html(에러 프래그먼트 재사용), navbar에 회원가입 링크, UserControllerTest 4건
 - 이유: 교재 3-06 회원가입, 교재는 저장 시 DB 예외를 잡아 전체 에러로 보여주지만, 저장 전에 중복을 확인해 어느 필드가 문제인지 알려주도록 개선, 에러 메시지는 순번-필드명-내용 형식을 그대로 사용해 정렬과 focus 유지
 - 결과: ./gradlew test 33건 통과(성공 302 /, 비밀번호 불일치, 중복 ID, 이메일 형식 오류)
+
+### 023-01 로그인과 로그아웃, 폼 로그인 구현
+- [링크](https://github.com/jhs512/jsb-plus/commit/023-01)
+- 작업: UserRole(ADMIN, USER), UserSecurityService(UserDetailsService) 추가, SecurityConfig에 formLogin(/user/login), logout(POST /user/logout) 설정, login_form.html, 실패 시 ?error 메시지, navbar: sec:authorize로 로그인 상태별 메뉴, 사용자 이름 표시, 로그아웃 버튼, BaseInitData에 개발용 계정(admin, user1, user2) 추가, 로그인/로그아웃 테스트 4건
+- 이유: 교재 3-07 로그인과 로그아웃, 교재는 GET으로 로그아웃하지만 Security 7 기본값대로 CSRF 보호를 받는 POST 사용
+- 결과: ./gradlew test 37건 통과(user1 로그인 USER 권한, admin ADMIN 권한, 잘못된 비밀번호 ?error, 로그아웃), 브라우저에서 user1 로그인 후 목록으로 이동, 상단에 user1과 로그아웃 표시 확인
