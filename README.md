@@ -42,3 +42,9 @@
 - 작업: index(), hello()가 String을 반환하고 @ResponseBody 적용, MockMvc 컨트롤러 테스트(MainControllerTest) 추가
 - 이유: 액션 메서드의 반환값을 HTTP 응답 본문으로 사용(14163 4강), 브라우저 대신 테스트로 응답 코드와 본문을 반복 검증
 - 결과: ./gradlew test 4건 통과(/ -> SBB, /hello -> 안녕하세요., /not-exist -> 404)
+
+### 003-01 DB 설정, H2와 JPA 추가 및 dev/test 프로파일 분리
+- [링크](https://github.com/jhs512/jsb-plus/commit/003-01)
+- 작업: data-jpa, h2, h2console 의존성 추가, application-dev.yaml(H2 파일 DB), application-test.yaml(H2 메모리 DB) 분리, DB 파일을 .gitignore에 추가, 테스트 클래스에 @ActiveProfiles("test") 적용
+- 이유: 교재는 DB 하나만 사용하지만, 테스트가 개발 데이터를 오염시키지 않도록 분리(14163 5강), DB 파일은 저장소에 올리면 안 됨(14168 2강)
+- 결과: ./gradlew test 통과, bootRun 후 /h2-console 200 응답, db_dev.mv.db 생성 및 git 추적 제외 확인
