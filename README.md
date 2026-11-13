@@ -426,3 +426,9 @@
 - 작업: spring-boot-starter-mail 추가, global/mail/MailService(JavaMailSender가 없으면 로그로 대체), UserService.resetPassword: SecureRandom 임시 비밀번호(10자)로 변경 후 메일 발송, GET/POST /user/password/reset, password_reset_form.html, 로그인 화면에 비밀번호 찾기 링크와 안내 메시지, application-secret.yaml(.gitignore) 선택적 import + application-secret.yaml.template, @MockitoBean으로 메일 발송 내용 검증 테스트 2건
 - 이유: 도전과제 3-14 비밀번호 찾기, 가입되지 않은 이메일이어도 같은 안내를 보여줘 계정 존재 여부 노출 방지, SMTP 계정 같은 비밀값은 public 저장소에 올리지 않음(PLAN 결정 4)
 - 결과: ./gradlew test 65건 통과(메일로 보낸 임시 비밀번호로 matches 성공, 기존 1234는 실패, 없는 이메일은 발송 안 함), dev 실행에서 POST /user/password/reset -> 302 /user/login, 메일 미설정 경고 로그 출력 확인, 실제 SMTP 발송은 계정 정보가 없어 검증하지 못함
+
+### 034-01 프로필, 내 정보와 최근 질문·답변·댓글
+- [링크](https://github.com/jhs512/jsb-plus/commit/034-01)
+- 작업: ProfileController: GET /user/profile(@Transactional(readOnly = true)), 질문, 답변, 댓글 리포지터리에 findTop10ByAuthorOrderByCreateDateDesc, countByAuthor, profile.html: 이메일, 가입일, 활동 수, 최근 질문/답변(앵커 링크)/댓글, navbar의 사용자 이름을 프로필 링크로, 비밀번호 변경은 프로필 화면으로 이동, 테스트 2건
+- 이유: 도전과제 3-14 프로필 화면, 단순 조회라 서비스 없이 리포지터리 사용, 조회 전용 트랜잭션으로 변경 감지 생략
+- 결과: ./gradlew test 67건 통과(user2: 질문 0 · 답변 1 · 댓글 0, /question/detail/2#answer_1 링크, 비로그인 302)
