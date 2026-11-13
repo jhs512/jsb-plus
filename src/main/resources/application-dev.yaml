@@ -1,4 +1,9 @@
 spring:
+  config:
+    # 비밀 설정 파일(있을 때만 읽음). 프로젝트 루트의 application-secret.yaml, .gitignore에 등록됨
+    # dev에서만 읽는다. test는 로컬 비밀 설정과 상관없이 항상 같은 결과가 나와야 하므로 읽지 않는다.
+    # 예시는 application-secret.yaml.template 참고
+    import: optional:file:./application-secret.yaml
   thymeleaf:
     cache: false # 개발 중에는 템플릿 수정이 바로 반영되도록 (운영에서는 켜야 함, 14163 29강)
     prefix: file:src/main/resources/templates/ # 빌드 없이 소스 폴더의 템플릿을 바로 읽음 (14168)

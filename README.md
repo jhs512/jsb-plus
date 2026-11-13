@@ -18,7 +18,7 @@
 ```
 - 개발용 계정: `admin`, `user1`, `user2` / 비밀번호 `1234` (BaseInitData)
 - H2 콘솔: http://localhost:8080/h2-console (JDBC URL `jdbc:h2:./db_dev;MODE=MySQL`, 사용자 `sa`)
-- 메일 발송, 구글 로그인을 쓰려면 `application-secret.yaml.template`을 `application-secret.yaml`로 복사해 값을 채웁니다. (이 파일은 `.gitignore` 대상)
+- 메일 발송, 구글 로그인을 쓰려면 `application-secret.yaml.template`을 `application-secret.yaml`로 복사해 값을 채웁니다. (이 파일은 `.gitignore` 대상, dev 프로파일에서만 읽음)
 
 ## 패키지 구조 (14168 방식)
 ```
@@ -55,7 +55,7 @@ com.mysite.sbb
 
 ## 검증하지 못한 부분
 - 실제 SMTP 메일 발송(계정 필요): 메일 설정이 없으면 로그로 대체되는 것까지 확인
-- 실제 구글 로그인 완료(클라이언트 ID 필요): 가짜 client-id로 구글 인증 화면 리다이렉트까지 테스트
+- (037-02에서 실제 구글 계정 로그인까지 검증 완료: 로컬 application-secret.yaml + Google Cloud 테스트 사용자)
 
 ## 작업내역
 
@@ -526,3 +526,9 @@ com.mysite.sbb
 - 작업: SocialOidcUserService(OidcUserService 상속): 구글 sub, email로 SiteUser 찾기/생성 후 principal 이름을 우리 username으로, SecurityConfig userInfoEndpoint에 oidcUserService 추가, SiteOidcUser 이름 검증 테스트
 - 이유: 실제 구글 로그인 테스트에서 발견한 버그: scope에 openid가 있으면 OAuth2UserService 대신 OidcUserService가 호출되어 SiteUser가 생성되지 않고 principal 이름이 구글 sub가 됨 -> /user/profile에서 siteuser not found(404), 가짜 client-id 테스트는 리다이렉트까지만 확인해서 놓쳤던 부분
 - 결과: ego lite에서 실제 구글 계정으로 로그인(Google Cloud jsb-plus 프로젝트, 테스트 사용자), 수정 전: 로그인 후 /user/profile 404, 수정 후: google_(번호) 회원 자동 생성, 프로필 이메일 표시, 소셜 계정으로 질문 작성 및 본인 수정·삭제 버튼 확인
+
+### 037-03 소셜 로그인, 비밀 설정 파일은 dev 프로파일에서만 읽기
+- [링크](https://github.com/jhs512/jsb-plus/commit/037-03)
+- 작업: spring.config.import(optional:file:./application-secret.yaml)를 application.yaml에서 application-dev.yaml로 이동, README 실행 방법과 검증 범위 갱신
+- 이유: 로컬에 실제 application-secret.yaml이 생기자 테스트도 그 파일을 읽어 소셜 버튼 없음 테스트가 실패함, 테스트는 개인 비밀 설정과 무관하게 항상 같은 결과가 나와야 함(040-01과 같은 취지)
+- 결과: ./gradlew test 75건 전체 통과(비밀 파일이 있어도 test는 읽지 않음), dev 실행에서는 로그인 화면에 Google로 로그인 버튼 유지
