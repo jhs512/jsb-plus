@@ -48,3 +48,9 @@
 - 작업: data-jpa, h2, h2console 의존성 추가, application-dev.yaml(H2 파일 DB), application-test.yaml(H2 메모리 DB) 분리, DB 파일을 .gitignore에 추가, 테스트 클래스에 @ActiveProfiles("test") 적용
 - 이유: 교재는 DB 하나만 사용하지만, 테스트가 개발 데이터를 오염시키지 않도록 분리(14163 5강), DB 파일은 저장소에 올리면 안 됨(14168 2강)
 - 결과: ./gradlew test 통과, bootRun 후 /h2-console 200 응답, db_dev.mv.db 생성 및 git 추적 제외 확인
+
+### 003-02 DB 설정, SQL 로그 출력 설정
+- [링크](https://github.com/jhs512/jsb-plus/commit/003-02)
+- 작업: show-sql, format_sql, highlight_sql, use_sql_comments 설정, 바인딩 파라미터(bind), 조회 값(extract), 트랜잭션 로그 TRACE 설정
+- 이유: JPA가 만들어 내는 SQL과 실제 값을 눈으로 확인하며 학습(14163 6강)
+- 결과: ./gradlew test 통과
