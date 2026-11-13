@@ -54,3 +54,9 @@
 - 작업: show-sql, format_sql, highlight_sql, use_sql_comments 설정, 바인딩 파라미터(bind), 조회 값(extract), 트랜잭션 로그 TRACE 설정
 - 이유: JPA가 만들어 내는 SQL과 실제 값을 눈으로 확인하며 학습(14163 6강)
 - 결과: ./gradlew test 통과
+
+### 004-01 엔티티, Question 엔티티 추가
+- [링크](https://github.com/jhs512/jsb-plus/commit/004-01)
+- 작업: Question 엔티티(id, subject, content, createDate) 추가
+- 이유: 질문 데이터를 저장할 question 테이블을 JPA가 자동 생성하도록(교재 2-04)
+- 결과: bootRun 로그에서 create table question(id identity, subject varchar(200), content TEXT, create_date) 확인
