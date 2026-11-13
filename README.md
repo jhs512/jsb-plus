@@ -432,3 +432,9 @@
 - 작업: ProfileController: GET /user/profile(@Transactional(readOnly = true)), 질문, 답변, 댓글 리포지터리에 findTop10ByAuthorOrderByCreateDateDesc, countByAuthor, profile.html: 이메일, 가입일, 활동 수, 최근 질문/답변(앵커 링크)/댓글, navbar의 사용자 이름을 프로필 링크로, 비밀번호 변경은 프로필 화면으로 이동, 테스트 2건
 - 이유: 도전과제 3-14 프로필 화면, 단순 조회라 서비스 없이 리포지터리 사용, 조회 전용 트랜잭션으로 변경 감지 생략
 - 결과: ./gradlew test 67건 통과(user2: 질문 0 · 답변 1 · 댓글 0, /question/detail/2#answer_1 링크, 비로그인 302)
+
+### 035-01 최근 답변과 댓글, 최근 활동 화면
+- [링크](https://github.com/jhs512/jsb-plus/commit/035-01)
+- 작업: AnswerRepository, CommentRepository에 findTop10ByOrderByCreateDateDescIdDesc, AnswerService.getRecent, CommentService.getRecent, GET /question/recent, question_recent.html(답변은 #answer_ 앵커 링크), navbar에 최근 활동 메뉴, 테스트 1건
+- 이유: 도전과제 3-14 최근 답변과 최근 댓글 순으로 노출, 질문 목록만으로는 새 답변·댓글이 달린 것을 알기 어려움
+- 결과: ./gradlew test 68건 통과(최근 답변 앵커 링크, 방금 단 댓글 표시)
