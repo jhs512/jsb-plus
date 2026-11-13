@@ -186,3 +186,9 @@
 - 작업: global/exception/DataNotFoundException(@ResponseStatus NOT_FOUND) 추가, getQuestion에서 findById().orElseThrow로 예외 발생, 404 테스트 추가
 - 이유: findById().get()은 값이 없으면 500(No value present)이 나와 원인을 알기 어려움, 없는 자원은 404가 의미상 정확(14163 35강 3단계)
 - 결과: ./gradlew test 22건 통과(/question/detail/999 -> 404)
+
+### 011-01 URL 프리픽스, @RequestMapping("/question") 적용
+- [링크](https://github.com/jhs512/jsb-plus/commit/011-01)
+- 작업: QuestionController에 @RequestMapping("/question"), 액션 메서드는 /list, /detail/{id}만 표기
+- 이유: 공통 URL 앞부분을 한 곳에서 관리(교재 2-11)
+- 결과: ./gradlew test 22건 통과(URL 변화 없음)
