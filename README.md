@@ -126,3 +126,9 @@
 - 작업: domain/{주제}/{엔티티}/{entity,repository,controller} 구조로 이동(question/question, question/answer, home/home), 공통 코드는 global/{jpa,initData}로 이동, 테스트도 같은 패키지 구조로 이동
 - 이유: 기능이 늘어나도 파일 위치를 예측할 수 있도록 도메인 코드와 앱 전체 설정을 분리(14168 패키지 구조, PLAN 결정 1), 교재 2-06의 도메인별 분류를 한 단계 더 세분화
 - 결과: ./gradlew test 19건 통과(이동만 했으므로 동작 변화 없음)
+
+### 006-02 도메인별 분류, TestInitData를 BaseInitData로 이름 변경
+- [링크](https://github.com/jhs512/jsb-plus/commit/006-02)
+- 작업: TestInitData를 global/initData/BaseInitData로 이름 변경
+- 이유: 이 샘플 데이터는 테스트뿐 아니라 개발 환경(dev)에서도 쓰이므로 이름을 용도에 맞게 변경(14168 2강)
+- 결과: ./gradlew test 19건 통과

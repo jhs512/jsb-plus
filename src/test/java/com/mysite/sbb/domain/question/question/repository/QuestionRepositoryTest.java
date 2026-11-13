@@ -14,7 +14,7 @@ import java.util.List;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
-// test 프로파일(메모리 DB) + TestInitData가 만든 샘플 데이터(질문 2개, 답변 1개)를 기준으로 테스트한다.
+// test 프로파일(메모리 DB) + BaseInitData가 만든 샘플 데이터(질문 2개, 답변 1개)를 기준으로 테스트한다.
 @ActiveProfiles("test")
 @SpringBootTest
 class QuestionRepositoryTest {
