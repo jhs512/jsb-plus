@@ -66,3 +66,9 @@
 - 작업: Answer 엔티티(id, content, createDate, question) 추가, @ManyToOne(fetch = LAZY)로 질문 참조
 - 이유: 답변은 반드시 하나의 질문에 속함(N:1), ManyToOne 기본값 EAGER는 불필요한 조회를 유발하므로 LAZY 명시(14163 25강)
 - 결과: DDL 로그에서 answer.question_id 컬럼과 question을 참조하는 외래키 제약 생성 확인
+
+### 004-03 엔티티, [실험] mappedBy 없는 OneToMany는 중간 테이블을 만든다
+- [링크](https://github.com/jhs512/jsb-plus/commit/004-03)
+- 작업: Question에 @OneToMany List<Answer> answers 추가(mappedBy 없이)
+- 이유: mappedBy가 없으면 JPA가 두 관계를 별개로 보고 중간 테이블을 만든다는 것을 직접 확인(14163 11강)
+- 결과: DDL 로그에서 불필요한 question_answers(question_id, answers_id) 테이블 생성 확인
