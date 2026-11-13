@@ -78,3 +78,9 @@
 - 작업: @OneToMany(mappedBy = "question", cascade = {PERSIST, REMOVE}), answers를 new ArrayList<>()로 초기화
 - 이유: 관계의 주인을 Answer.question으로 지정해 중간 테이블 제거(14163 12강), 답변 자동 저장, 삭제를 위한 cascade(14163 21강)
 - 결과: DDL 로그에서 question_answers 테이블이 사라짐 확인
+
+### 004-05 엔티티, BaseEntity와 JPA Auditing 도입
+- [링크](https://github.com/jhs512/jsb-plus/commit/004-05)
+- 작업: BaseEntity(@MappedSuperclass: id, createDate, modifyDate) 추가, Question, Answer가 BaseEntity 상속, @EnableJpaAuditing으로 생성일, 수정일 자동 기록
+- 이유: 교재는 엔티티마다 id, 날짜를 반복 선언하고 createDate를 직접 대입함, 공통 필드를 한 곳에서 관리하고 날짜는 자동으로(14168 2강)
+- 결과: DDL에서 두 테이블 모두 id, create_date, modify_date 컬럼 생성 확인, ./gradlew test 통과
