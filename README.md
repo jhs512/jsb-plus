@@ -306,3 +306,9 @@
 - 작업: SiteUser(username, password, email, username과 email은 unique) 추가, UserRepository(findByUsername, existsByUsername, existsByEmail) 추가
 - 이유: 회원 정보를 저장할 테이블(교재 3-06), user는 DB 예약어라 SiteUser로 명명
 - 결과: DDL 로그에서 site_user 테이블과 unique 제약 생성 확인, ./gradlew test 28건 통과
+
+### 022-02 회원가입, BCrypt 비밀번호 암호화와 UserService
+- [링크](https://github.com/jhs512/jsb-plus/commit/022-02)
+- 작업: SecurityConfig에 PasswordEncoder(BCryptPasswordEncoder) 빈 추가, UserService.create: 비밀번호를 암호화해서 저장, UserServiceTest 추가
+- 이유: 비밀번호 원문을 저장하면 DB 유출 시 그대로 노출됨(교재 3-06), BCrypt는 salt를 섞어 같은 비밀번호도 매번 다른 해시가 됨
+- 결과: ./gradlew test 29건 통과(저장된 비밀번호가 원문과 다르고 $2a$ 형식, matches로 검증 성공)
