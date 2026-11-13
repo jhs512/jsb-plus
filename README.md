@@ -450,3 +450,9 @@
 - 작업: spring-boot-starter-oauth2-client 추가, SocialOAuth2UserService: 제공자 사용자 정보를 SiteUser(google_{sub})와 연결, principal 이름 = 우리 username, UserService.findOrCreateSocialUser(이메일 중복 시 비움), SecurityConfig: ClientRegistrationRepository가 있을 때만 oauth2Login, 로그인 화면에 설정된 제공자 버튼, application-secret.yaml.template에 google 설정 예시, 테스트 4건(가짜 client-id로 리다이렉트 검증)
 - 이유: 도전과제 3-14 소셜 미디어 로그인, 기존 코드가 principal.getName()으로 회원을 찾으므로 소셜 회원도 같은 방식으로 동작하게 연결, 클라이언트 시크릿은 public 저장소에 올리지 않음(application-secret.yaml은 .gitignore)
 - 결과: ./gradlew test 73건 통과(가짜 client-id 설정 시 로그인 화면 버튼, /oauth2/authorization/google -> accounts.google.com 302, 설정 없으면 버튼 없음), 설정 파일 없이 앱 정상 실행 확인, 실제 구글 로그인 완료 과정은 클라이언트 ID가 없어 검증하지 못함
+
+### 038-01 마크다운 에디터, EasyMDE 적용
+- [링크](https://github.com/jhs512/jsb-plus/commit/038-01)
+- 작업: layout.html에 EasyMDE 2.19.0(jsDelivr) CSS, JS 추가, global.js: textarea.markdown-editor를 EasyMDE로 변환(forceSync로 원래 textarea와 값 동기화), 질문 등록·수정, 답변 작성, 답변 수정 textarea에 markdown-editor 적용
+- 이유: 도전과제 3-14 마크다운 에디터 적용, 교재가 추천한 SimpleMDE는 관리가 중단되어 후속 프로젝트 EasyMDE 사용, cdnjs에 없어 jsDelivr 사용, forceSync 덕분에 기존 폼 전송, 검증 실패 시 값 유지 로직을 그대로 사용
+- 결과: ./gradlew test 73건 통과, 브라우저에서 user1로 에디터 툴바 표시, 마크다운으로 강좌 카테고리 질문 등록 -> 상세에서 소제목, 굵게, 목록 렌더링, script 태그는 문자로 표시(XSS 방지) 확인
