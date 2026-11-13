@@ -234,3 +234,9 @@
 - 작업: 목록에 질문 등록하기 버튼 추가, GET /question/create(폼), POST /question/create(저장 후 목록으로 redirect), QuestionService.create 추가, question_form.html 추가(label 안에 input을 넣는 방식), 등록 테스트 추가
 - 이유: 같은 URL을 GET(폼 보여주기), POST(처리)로 구분(14168 26강), action 생략 시 현재 URL로 전송(14168 26강), label 안에 input을 넣는 현대적 방식(14168 21강)
 - 결과: ./gradlew test 25건 통과(등록 후 목록에 새 질문 제목 표시)
+
+### 016-02 질문 등록, record 폼과 @Valid 검증
+- [링크](https://github.com/jhs512/jsb-plus/commit/016-02)
+- 작업: validation 의존성 추가, QuestionForm(record) + @NotBlank, @Size, @ModelAttribute("form") @Valid + BindingResult로 실패 시 폼 다시 표시, th:object, th:field로 입력값 유지, #fields.allErrors로 에러 출력
+- 이유: 교재의 class + Getter/Setter 폼 대신 record로 코드 축소(14168 40강), BindingResult가 없으면 검증 실패 시 바로 400 예외(14168 13강), 에러 메시지에 순번-필드명을 붙여 다음 작업에서 정렬, focus에 사용
+- 결과: ./gradlew test 26건 통과(빈 제목 -> 200 question_form, subject 필드 에러, 입력한 내용 유지), 현재 화면에는 01-subject- 접두어가 그대로 보임(다음 커밋에서 처리)
