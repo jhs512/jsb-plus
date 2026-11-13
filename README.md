@@ -444,3 +444,9 @@
 - 작업: Question.viewCount(DB 기본값 0) 추가, QuestionRepository.increaseViewCount: @Modifying JPQL update(view_count = view_count + 1), clearAutomatically, 상세 진입 시 세션의 viewedQuestionIds로 질문당 1회만 증가, 목록에 조회 열, 상세에 조회 수 표시, 테스트 1건
 - 이유: 도전과제 3-14 조회 수 표시, 새로고침이나 답변 작성 후 redirect로 조회 수가 오르는 문제 방지, 읽고 +1 후 저장하면 동시 조회 시 갱신이 분실될 수 있어 DB에서 한 번에 증가(강의 외 추가 개선)
 - 결과: ./gradlew test 69건 통과(같은 세션 2회 조회 -> +1, 다른 세션 -> +1 더), 기존 dev DB에서 실행 시 컬럼 추가 후 정상 동작, 쿠키 유지 요청은 1 그대로, 새 요청은 2 확인
+
+### 037-01 소셜 로그인, Google OAuth2 로그인(설정이 있을 때만 활성화)
+- [링크](https://github.com/jhs512/jsb-plus/commit/037-01)
+- 작업: spring-boot-starter-oauth2-client 추가, SocialOAuth2UserService: 제공자 사용자 정보를 SiteUser(google_{sub})와 연결, principal 이름 = 우리 username, UserService.findOrCreateSocialUser(이메일 중복 시 비움), SecurityConfig: ClientRegistrationRepository가 있을 때만 oauth2Login, 로그인 화면에 설정된 제공자 버튼, application-secret.yaml.template에 google 설정 예시, 테스트 4건(가짜 client-id로 리다이렉트 검증)
+- 이유: 도전과제 3-14 소셜 미디어 로그인, 기존 코드가 principal.getName()으로 회원을 찾으므로 소셜 회원도 같은 방식으로 동작하게 연결, 클라이언트 시크릿은 public 저장소에 올리지 않음(application-secret.yaml은 .gitignore)
+- 결과: ./gradlew test 73건 통과(가짜 client-id 설정 시 로그인 화면 버튼, /oauth2/authorization/google -> accounts.google.com 302, 설정 없으면 버튼 없음), 설정 파일 없이 앱 정상 실행 확인, 실제 구글 로그인 완료 과정은 클라이언트 ID가 없어 검증하지 못함
