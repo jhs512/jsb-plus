@@ -29,6 +29,14 @@ public class QuestionService {
                 .orElseThrow(() -> new DataNotFoundException("question not found"));
     }
 
+    public void modify(Question question, String subject, String content) {
+        question.modify(subject, content); // 트랜잭션 안이면 더티체킹으로 UPDATE, modifyDate는 Auditing이 갱신
+    }
+
+    public void delete(Question question) {
+        questionRepository.delete(question); // cascade REMOVE로 답변도 함께 삭제
+    }
+
     public Question create(SiteUser author, String subject, String content) {
         return questionRepository.save(new Question(author, subject, content));
     }

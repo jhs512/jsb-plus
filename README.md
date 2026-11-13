@@ -342,3 +342,9 @@
 - 작업: spring.mvc.hiddenmethod.filter.enabled: true, static/resource/global.js: a[method=POST, PUT, DELETE] 클릭 시 CSRF 토큰과 _method를 담은 숨은 폼으로 전송, onclick(confirm) 먼저 실행, layout.html에서 global.js 로드, 로그아웃을 a[method=POST] 링크로 변경
 - 이유: 교재는 삭제, 추천을 GET 링크로 처리하는데, GET은 조회용이라 링크 미리보기나 크롤러 요청, CSRF 공격으로 데이터가 바뀔 수 있음(PLAN 결정 2), HTML 폼은 GET, POST만 지원하므로 _method로 PUT, DELETE 표현(14168 41~44강)
 - 결과: ./gradlew test 39건 통과, 브라우저에서 user1 로그인 후 로그아웃 링크 클릭 시 POST /user/logout 처리되어 메뉴가 로그인, 회원가입으로 바뀜 확인
+
+### 025-02 수정과 삭제, 질문 수정(PUT)과 삭제(DELETE)
+- [링크](https://github.com/jhs512/jsb-plus/commit/025-02)
+- 작업: Question.isAuthor(user), QuestionService.modify, delete 추가, GET /question/modify/{id}(기존 값 채운 폼), PUT /question/modify/{id}, DELETE /question/delete/{id}, 등록 폼 재사용: 수정일 때만 _method=PUT hidden, 제목/타이틀을 질문 수정으로, 본인 글이 아니면 403, 상세 화면에서 본인에게만 수정·삭제 버튼(삭제는 a[method=DELETE] + confirm), 테스트 6건 추가
+- 이유: 교재 3-09 수정과 삭제, 교재의 POST 수정, GET 삭제 대신 PUT, DELETE(PLAN 결정 2, 14168 41·44강), 권한 없음은 400보다 403 Forbidden이 정확(강의 외 추가 개선)
+- 결과: ./gradlew test 45건 통과(본인 수정 302, POST+_method=PUT 동작, 남의 글 403, DELETE 후 상세 404, GET 삭제 405), 브라우저에서 user1로 수정 폼(기존 값 채워짐) -> 저장 -> 상세에 (수정됨) 제목, 수정·삭제 버튼 표시 확인
