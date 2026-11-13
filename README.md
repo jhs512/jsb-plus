@@ -390,3 +390,9 @@
 - 작업: QuestionRepository.findAllByKeyword: @Query JPQL(left join + distinct + like), Pageable, QuestionService.getList(page, kw) 추가, 검색 테스트(제목, 내용, 질문 글쓴이, 답변 내용, 답변 글쓴이, 빈 검색어, 결과 없음)
 - 이유: 교재 3-13 검색, 조건이 많아 메서드 이름 규칙 대신 JPQL 사용, 답변이 없는 질문도 나와야 하므로 LEFT JOIN, 답변 여러 개가 일치해도 질문은 한 번만 나오도록 DISTINCT
 - 결과: ./gradlew test 54건 통과
+
+### 029-02 검색, 검색창과 검색어 유지 페이징
+- [링크](https://github.com/jhs512/jsb-plus/commit/029-02)
+- 작업: 컨트롤러에 kw 파라미터(기본값 빈 문자열) 추가, 모델에 kw 전달, 목록 상단에 GET 검색 폼, 질문 등록 버튼을 위로 이동, 페이지 링크를 @{/question/list(page=..., kw=...)}로 만들어 검색어 유지, 컨트롤러 검색 테스트
+- 이유: 교재 3-13 검색 화면, 교재는 숨은 폼과 자바스크립트로 page, kw를 함께 보내지만, 검색은 조회라 GET 폼으로 충분하고 링크는 타임리프 URL 파라미터 문법으로 인코딩까지 처리
+- 결과: ./gradlew test 55건 통과, 브라우저에서 [01 검색 시 테스트 데이터 [010]~[019] 10건, 검색창에 검색어 유지 확인
