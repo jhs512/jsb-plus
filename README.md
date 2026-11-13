@@ -438,3 +438,9 @@
 - 작업: AnswerRepository, CommentRepository에 findTop10ByOrderByCreateDateDescIdDesc, AnswerService.getRecent, CommentService.getRecent, GET /question/recent, question_recent.html(답변은 #answer_ 앵커 링크), navbar에 최근 활동 메뉴, 테스트 1건
 - 이유: 도전과제 3-14 최근 답변과 최근 댓글 순으로 노출, 질문 목록만으로는 새 답변·댓글이 달린 것을 알기 어려움
 - 결과: ./gradlew test 68건 통과(최근 답변 앵커 링크, 방금 단 댓글 표시)
+
+### 036-01 조회 수, 질문 조회 수 표시(세션당 1회, DB에서 원자적 증가)
+- [링크](https://github.com/jhs512/jsb-plus/commit/036-01)
+- 작업: Question.viewCount(DB 기본값 0) 추가, QuestionRepository.increaseViewCount: @Modifying JPQL update(view_count = view_count + 1), clearAutomatically, 상세 진입 시 세션의 viewedQuestionIds로 질문당 1회만 증가, 목록에 조회 열, 상세에 조회 수 표시, 테스트 1건
+- 이유: 도전과제 3-14 조회 수 표시, 새로고침이나 답변 작성 후 redirect로 조회 수가 오르는 문제 방지, 읽고 +1 후 저장하면 동시 조회 시 갱신이 분실될 수 있어 DB에서 한 번에 증가(강의 외 추가 개선)
+- 결과: ./gradlew test 69건 통과(같은 세션 2회 조회 -> +1, 다른 세션 -> +1 더), 기존 dev DB에서 실행 시 컬럼 추가 후 정상 동작, 쿠키 유지 요청은 1 그대로, 새 요청은 2 확인
