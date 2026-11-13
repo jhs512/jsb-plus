@@ -96,3 +96,9 @@
 - 작업: QuestionRepositoryTest 추가(findAll, findById)
 - 이유: 샘플 데이터가 메모리 DB에 들어가는지, Repository 기본 메서드가 동작하는지 테스트로 확인(교재 2-05, 14163 15강)
 - 결과: ./gradlew test 6건 통과
+
+### 005-03 리포지터리, 쿼리 메서드 명명 규칙
+- [링크](https://github.com/jhs512/jsb-plus/commit/005-03)
+- 작업: findBySubject, findBySubjectAndContent, findBySubjectLike, findBySubjectIn, findByIdLessThanOrderByIdDesc 추가 및 테스트
+- 이유: 메서드 이름만으로 WHERE, AND, LIKE, IN, ORDER BY 조건이 생성되는 규칙 학습(교재 2-05, 14163 16·17강)
+- 결과: ./gradlew test 11건 통과, 테스트 로그에서 생성된 SQL 확인
