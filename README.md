@@ -84,3 +84,9 @@
 - 작업: BaseEntity(@MappedSuperclass: id, createDate, modifyDate) 추가, Question, Answer가 BaseEntity 상속, @EnableJpaAuditing으로 생성일, 수정일 자동 기록
 - 이유: 교재는 엔티티마다 id, 날짜를 반복 선언하고 createDate를 직접 대입함, 공통 필드를 한 곳에서 관리하고 날짜는 자동으로(14168 2강)
 - 결과: DDL에서 두 테이블 모두 id, create_date, modify_date 컬럼 생성 확인, ./gradlew test 통과
+
+### 005-01 리포지터리, Repository 추가와 샘플 데이터 자동 생성
+- [링크](https://github.com/jhs512/jsb-plus/commit/005-01)
+- 작업: QuestionRepository, AnswerRepository(JpaRepository) 추가, TestInitData: ApplicationRunner 빈으로 시작 시 질문 2개, 답변 1개 생성, @Lazy self 주입으로 @Transactional 적용
+- 이유: 교재는 테스트 코드로 데이터를 넣지만, 앱 시작마다 같은 샘플 데이터가 보장되도록(14163 14강), this.work1() 직접 호출은 프록시를 거치지 않아 트랜잭션이 적용되지 않음
+- 결과: bootRun 로그에서 work1 트랜잭션 하나 안에서 count 1회, insert 3회 확인, ./gradlew test 통과
