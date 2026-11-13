@@ -378,3 +378,9 @@
 - 작업: commonmark 0.24.0 의존성 추가, global/markdown/MarkdownService(render) 추가, @ControllerAdvice GlobalModelAttribute로 모든 템플릿에 markdown 변수 등록, 상세 화면 본문을 th:utext="${markdown.render(...)}"로 출력, MarkdownServiceTest 2건
 - 이유: 본문에 제목, 목록, 굵게 등 서식 사용(교재 3-12), 교재의 ${@빈.메서드()} 방식은 Thymeleaf 3.1.5에서 TemplateProcessingException으로 막혀서 공통 모델 속성으로 전달(14168 19강), [실험] 입력 속 <script>가 그대로 HTML이 되는 것을 테스트로 확인(다음 커밋에서 막음)
 - 결과: ./gradlew test 52건 통과(마크다운 -> h1, strong, li 변환, script 태그가 그대로 통과함을 확인)
+
+### 028-02 마크다운, 원본 HTML 이스케이프와 URL 무력화로 XSS 방지
+- [링크](https://github.com/jhs512/jsb-plus/commit/028-02)
+- 작업: HtmlRenderer에 escapeHtml(true), sanitizeUrls(true) 적용, 테스트: script 태그 이스케이프, javascript: 링크 무력화
+- 이유: th:utext는 이스케이프를 하지 않으므로 사용자가 입력한 HTML이 그대로 실행될 수 있음(14168 16강 th:text vs th:utext), 교재 코드에는 이 처리가 없음(강의 외 추가 개선)
+- 결과: ./gradlew test 53건 통과(<script> -> &lt;script&gt;, href=javascript: 없음)
