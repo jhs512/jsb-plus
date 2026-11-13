@@ -168,3 +168,9 @@
 - 작업: Question, Answer의 @Setter 제거, @NoArgsConstructor(PROTECTED) + 필요한 값을 받는 생성자 추가, modify() 메서드 추가, addAnswer는 new Answer(this, content) 사용, BaseInitData, 테스트를 생성자/modify 방식으로 수정
 - 이유: Setter가 열려 있으면 어디서든 값을 바꿀 수 있어 변경 지점을 추적하기 어려움, 값을 바꾸는 경로를 엔티티 메서드로 제한(14168 Post 엔티티 방식)
 - 결과: ./gradlew test 20건 통과
+
+### 010-01 상세 페이지, 질문을 조회해 상세 화면에 표시
+- [링크](https://github.com/jhs512/jsb-plus/commit/010-01)
+- 작업: QuestionService.getQuestion(id) 추가, GET /question/detail/{id}, question_detail.html 추가, 상세 화면 테스트 추가
+- 이유: 질문 하나의 제목과 내용을 보여주는 화면(교재 2-10, 14163 35강 1단계), @PathVariable로 URL 경로의 값을 받는 방법 학습
+- 결과: ./gradlew test 21건 통과
