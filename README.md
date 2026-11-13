@@ -12,3 +12,9 @@
 - 작업: git init (main 브랜치), .gitignore 기본 항목 추가, README 작업내역 섹션과 docs/PLAN.md 추가
 - 이유: 작업 기록을 커밋 단위로 남기기 위한 준비, 커밋마다 README 작업내역을 누적하는 규칙 적용
 - 결과: git log, git tag로 커밋과 태그 생성 확인
+
+### 000-02 저장소 준비, GitHub 원격 저장소 연결
+- [링크](https://github.com/jhs512/jsb-plus/commit/000-02)
+- 작업: GitHub public 저장소 jhs512/jsb-plus 생성, origin 연결 후 main 브랜치와 태그 push
+- 이유: README의 태그 링크(/commit/태그명)가 동작하려면 원격 저장소에 태그가 있어야 함
+- 결과: gh repo view와 GitHub 태그 링크로 접속 확인
