@@ -384,3 +384,9 @@
 - 작업: HtmlRenderer에 escapeHtml(true), sanitizeUrls(true) 적용, 테스트: script 태그 이스케이프, javascript: 링크 무력화
 - 이유: th:utext는 이스케이프를 하지 않으므로 사용자가 입력한 HTML이 그대로 실행될 수 있음(14168 16강 th:text vs th:utext), 교재 코드에는 이 처리가 없음(강의 외 추가 개선)
 - 결과: ./gradlew test 53건 통과(<script> -> &lt;script&gt;, href=javascript: 없음)
+
+### 029-01 검색, JPQL로 질문·답변·글쓴이 통합 검색 쿼리
+- [링크](https://github.com/jhs512/jsb-plus/commit/029-01)
+- 작업: QuestionRepository.findAllByKeyword: @Query JPQL(left join + distinct + like), Pageable, QuestionService.getList(page, kw) 추가, 검색 테스트(제목, 내용, 질문 글쓴이, 답변 내용, 답변 글쓴이, 빈 검색어, 결과 없음)
+- 이유: 교재 3-13 검색, 조건이 많아 메서드 이름 규칙 대신 JPQL 사용, 답변이 없는 질문도 나와야 하므로 LEFT JOIN, 답변 여러 개가 일치해도 질문은 한 번만 나오도록 DISTINCT
+- 결과: ./gradlew test 54건 통과
