@@ -366,3 +366,9 @@
 - 작업: Question, Answer에 @ManyToMany Set<SiteUser> voters와 vote() 추가(question_voters, answer_voters 중간 테이블), POST /question/vote/{id}, POST /answer/vote/{id}, 상세 화면에 추천 버튼(a[method=POST] + confirm)과 추천 수, 테스트 2건
 - 이유: 교재 3-10 추천 기능, 교재의 GET 추천 대신 POST(PLAN 결정 2), Set + id 기반 equals로 같은 사람의 중복 추천 방지
 - 결과: ./gradlew test 50건 통과(같은 사용자가 두 번 추천해도 1표), DDL에서 question_voters(question_id, voters_id) 중간 테이블 생성 확인
+
+### 027-01 앵커, 답변 작성·수정·추천 후 해당 답변 위치로 이동
+- [링크](https://github.com/jhs512/jsb-plus/commit/027-01)
+- 작업: 상세 화면 답변마다 <a id="answer_{id}"> 앵커, 답변 작성, 수정, 추천 후 /question/detail/{질문id}#answer_{답변id}로 redirect, 답변 작성 시 flush로 INSERT를 먼저 실행해 새 답변 id 확보
+- 이유: 답변이 많을 때 페이지 맨 위로 돌아가지 않고 방금 작업한 답변으로 스크롤(교재 3-11), addAnswer 방식은 트랜잭션 종료 시 INSERT라서 그 전에는 id가 0(14163 21강에서 본 동작)
+- 결과: ./gradlew test 50건 통과(작성·수정·추천은 #answer_* 패턴, 삭제는 앵커 없이 상세로)
