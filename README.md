@@ -348,3 +348,9 @@
 - 작업: Question.isAuthor(user), QuestionService.modify, delete 추가, GET /question/modify/{id}(기존 값 채운 폼), PUT /question/modify/{id}, DELETE /question/delete/{id}, 등록 폼 재사용: 수정일 때만 _method=PUT hidden, 제목/타이틀을 질문 수정으로, 본인 글이 아니면 403, 상세 화면에서 본인에게만 수정·삭제 버튼(삭제는 a[method=DELETE] + confirm), 테스트 6건 추가
 - 이유: 교재 3-09 수정과 삭제, 교재의 POST 수정, GET 삭제 대신 PUT, DELETE(PLAN 결정 2, 14168 41·44강), 권한 없음은 400보다 403 Forbidden이 정확(강의 외 추가 개선)
 - 결과: ./gradlew test 45건 통과(본인 수정 302, POST+_method=PUT 동작, 남의 글 403, DELETE 후 상세 404, GET 삭제 405), 브라우저에서 user1로 수정 폼(기존 값 채워짐) -> 저장 -> 상세에 (수정됨) 제목, 수정·삭제 버튼 표시 확인
+
+### 025-03 수정과 삭제, 답변 수정(PUT)과 삭제(DELETE)
+- [링크](https://github.com/jhs512/jsb-plus/commit/025-03)
+- 작업: AnswerService.getAnswer, modify, delete 추가, Answer.isAuthor 추가, GET/PUT /answer/modify/{id}, answer_form.html, DELETE /answer/delete/{id}, 삭제는 question.deleteAnswer(answer) -> @OneToMany orphanRemoval = true로 DELETE, BaseEntity에 id 기반 equals/hashCode(동치성 먼저 비교), 상세 화면에서 본인 답변에만 수정·삭제 버튼, 테스트 3건
+- 이유: 교재 3-09 답변 수정과 삭제, answerRepository.delete 대신 부모 컬렉션에서 제거하는 객체지향 방식(14168 37강), 리스트의 remove가 같은 id의 답변을 찾으려면 equals 재정의 필요(14168 37·38강)
+- 결과: ./gradlew test 48건 통과(본인 수정 302, 남의 답변 403, 삭제 후 answer 조회 결과 없음)

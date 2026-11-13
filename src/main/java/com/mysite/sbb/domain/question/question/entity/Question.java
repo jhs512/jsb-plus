@@ -35,7 +35,8 @@ public class Question extends BaseEntity {
     // mappedBy = "question": 관계의 주인은 Answer.question(question_id 외래키)이다. -> 중간 테이블 없음 (14163 12강)
     // PERSIST: 이 리스트에 새로 추가된 답변은 자동 INSERT, REMOVE: 질문 삭제 시 답변도 자동 DELETE (14163 21강)
     // new ArrayList<>(): null이 아니므로 바로 add 가능 (14163 23강)
-    @OneToMany(mappedBy = "question", cascade = {CascadeType.PERSIST, CascadeType.REMOVE})
+    // orphanRemoval: answers 리스트에서 빠진 답변(고아)은 자동 DELETE (14168 37강)
+    @OneToMany(mappedBy = "question", cascade = {CascadeType.PERSIST, CascadeType.REMOVE}, orphanRemoval = true)
     private List<Answer> answers = new ArrayList<>();
 
     // @Setter 대신 "만들 때 필요한 값"을 생성자로 받는다. (14168)
@@ -63,5 +64,9 @@ public class Question extends BaseEntity {
         answers.add(answer);                        // 자바 객체 쪽 관계도 함께 맞춰 준다.
 
         return answer;
+    }
+
+    public boolean deleteAnswer(Answer answer) {
+        return answers.remove(answer); // 리스트에서 제거 -> orphanRemoval로 DELETE
     }
 }
