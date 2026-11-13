@@ -156,3 +156,9 @@
 - 작업: GET / 가 redirect:/question/list 반환, 테스트를 302, Location 검증으로 변경
 - 이유: 사이트 첫 화면을 질문 목록으로(교재 2-08), redirect는 서버가 직접 다른 페이지를 그리는 것이 아니라 브라우저에게 다시 요청하라고 알려 주는 것(14168 28강)
 - 결과: ./gradlew test 20건 통과(GET / -> 302, redirectedUrl=/question/list)
+
+### 009-01 서비스, QuestionService 도입
+- [링크](https://github.com/jhs512/jsb-plus/commit/009-01)
+- 작업: QuestionService(getList) 추가, 컨트롤러가 리포지터리 대신 서비스를 사용
+- 이유: 컨트롤러(요청/응답), 서비스(업무 로직), 리포지터리(DB 접근) 역할 분리(교재 2-09), 여러 컨트롤러가 같은 로직을 재사용할 수 있음
+- 결과: ./gradlew test 20건 통과
