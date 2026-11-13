@@ -282,3 +282,9 @@
 - 작업: 질문 제목 옆에 #lists.size(question.answers) 표시(답변이 있을 때만)
 - 이유: 목록에서 답변이 달린 질문을 바로 알아볼 수 있도록(교재 3-04)
 - 결과: ./gradlew test 28건 통과, 목록 1페이지 요청 시 SQL 로그에서 질문 10개마다 answer 조회가 1번씩, 총 10번 실행됨(N+1 문제) 확인
+
+### 020-02 답변 개수, default_batch_fetch_size로 N+1 완화
+- [링크](https://github.com/jhs512/jsb-plus/commit/020-02)
+- 작업: hibernate.default_batch_fetch_size: 100 설정
+- 이유: 목록의 질문마다 answers를 따로 조회하는 N+1(10번 추가 조회) 문제 확인, LAZY 컬렉션을 IN 절로 묶어 한 번에 조회(강의 외 추가 개선, 14163 13강의 OneToMany 사용 기준과 연결)
+- 결과: ./gradlew test 28건 통과, 목록 1페이지 SQL 로그에서 answer 조회가 question_id in (...) 1번으로 줄어듦 확인
