@@ -18,3 +18,9 @@
 - 작업: GitHub public 저장소 jhs512/jsb-plus 생성, origin 연결 후 main 브랜치와 태그 push
 - 이유: README의 태그 링크(/commit/태그명)가 동작하려면 원격 저장소에 태그가 있어야 함
 - 결과: gh repo view와 GitHub 태그 링크로 접속 확인
+
+### 001-01 프로젝트 생성, Spring Initializr로 프로젝트 생성
+- [링크](https://github.com/jhs512/jsb-plus/commit/001-01)
+- 작업: Spring Boot 4.1.2, Java 25, Gradle Kotlin DSL(build.gradle.kts), 의존성: webmvc, lombok, devtools, 그룹 com.mysite, 메인 클래스 com.mysite.sbb.SbbApplication
+- 이유: 교재(Boot 3.2.1, Groovy) 대신 14163 강의의 최신 환경 적용
+- 결과: ./gradlew test 통과(contextLoads)
