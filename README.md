@@ -144,3 +144,9 @@
 - 작업: thymeleaf 의존성 추가, templates/question_list.html에서 th:each, th:text로 목록 출력, Model.addAttribute로 questionList 전달, dev 프로파일에서 타임리프 캐시 끄기, 소스 폴더 템플릿 직접 읽기
 - 이유: HTML은 템플릿이, 데이터 준비는 컨트롤러가 맡도록 역할 분리(교재 2-07, 14163 28·30·31강), 템플릿 수정 후 재시작 없이 확인(14163 29강)
 - 결과: ./gradlew test 20건 통과(같은 테스트가 템플릿 방식에서도 통과)
+
+### 007-03 질문 목록, 테이블로 출력하고 작성일시 표시
+- [링크](https://github.com/jhs512/jsb-plus/commit/007-03)
+- 작업: question_list.html을 table(thead, tbody)로 변경, #temporals.format으로 작성일시 출력
+- 이유: 목록 데이터는 표 형태가 읽기 쉬움(14163 32강, 교재 2-07)
+- 결과: ./gradlew test 20건 통과, 브라우저에서 /question/list 표 출력 확인
