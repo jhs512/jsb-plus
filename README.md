@@ -324,3 +324,9 @@
 - 작업: UserRole(ADMIN, USER), UserSecurityService(UserDetailsService) 추가, SecurityConfig에 formLogin(/user/login), logout(POST /user/logout) 설정, login_form.html, 실패 시 ?error 메시지, navbar: sec:authorize로 로그인 상태별 메뉴, 사용자 이름 표시, 로그아웃 버튼, BaseInitData에 개발용 계정(admin, user1, user2) 추가, 로그인/로그아웃 테스트 4건
 - 이유: 교재 3-07 로그인과 로그아웃, 교재는 GET으로 로그아웃하지만 Security 7 기본값대로 CSRF 보호를 받는 POST 사용
 - 결과: ./gradlew test 37건 통과(user1 로그인 USER 권한, admin ADMIN 권한, 잘못된 비밀번호 ?error, 로그아웃), 브라우저에서 user1 로그인 후 목록으로 이동, 상단에 user1과 로그아웃 표시 확인
+
+### 024-01 글쓴이, 질문과 답변에 author 저장, 로그인 필수
+- [링크](https://github.com/jhs512/jsb-plus/commit/024-01)
+- 작업: Question.author, Answer.author(@ManyToOne LAZY SiteUser) 추가, 생성자와 addAnswer에 author 인자, @EnableMethodSecurity + 질문 등록, 답변 등록에 @PreAuthorize("isAuthenticated()"), Principal로 로그인 사용자 조회(UserService.getUser), 샘플 데이터 글쓴이 지정, 테스트는 @WithUserDetails로 로그인 상태 실행
+- 이유: 누가 쓴 글인지 저장(교재 3-08), 로그인하지 않은 사용자는 글을 쓸 수 없게
+- 결과: ./gradlew test 39건 통과(비로그인 GET /question/create -> /user/login 리다이렉트, 등록한 질문의 author = user1)
