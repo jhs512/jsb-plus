@@ -336,3 +336,9 @@
 - 작업: 목록에 글쓴이 열 추가, 상세의 질문, 답변 카드에 글쓴이 표시(author?.username), 비로그인 사용자에게는 답변 입력칸을 비활성화하고 안내 문구 표시
 - 이유: 누가 쓴 글인지 화면에 보여주기(교재 3-08), ?. 안전 접근으로 author가 없는 예전 데이터도 에러 없이 표시(14168 16강)
 - 결과: ./gradlew test 39건 통과, 빈 dev DB로 실행 후 상세 화면에 user1(질문), user2(답변), 비로그인 안내 문구 확인
+
+### 025-01 수정과 삭제, _method 필터와 global.js 도입
+- [링크](https://github.com/jhs512/jsb-plus/commit/025-01)
+- 작업: spring.mvc.hiddenmethod.filter.enabled: true, static/resource/global.js: a[method=POST, PUT, DELETE] 클릭 시 CSRF 토큰과 _method를 담은 숨은 폼으로 전송, onclick(confirm) 먼저 실행, layout.html에서 global.js 로드, 로그아웃을 a[method=POST] 링크로 변경
+- 이유: 교재는 삭제, 추천을 GET 링크로 처리하는데, GET은 조회용이라 링크 미리보기나 크롤러 요청, CSRF 공격으로 데이터가 바뀔 수 있음(PLAN 결정 2), HTML 폼은 GET, POST만 지원하므로 _method로 PUT, DELETE 표현(14168 41~44강)
+- 결과: ./gradlew test 39건 통과, 브라우저에서 user1 로그인 후 로그아웃 링크 클릭 시 POST /user/logout 처리되어 메뉴가 로그인, 회원가입으로 바뀜 확인
