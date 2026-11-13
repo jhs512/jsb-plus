@@ -36,3 +36,9 @@
 - 작업: MainController에 GET /, GET /hello 액션 메서드 추가(반환형 void)
 - 이유: @Controller와 @GetMapping의 URL 매핑 동작 확인, void를 반환하면 응답 본문이 없다는 점을 직접 확인(14163 3강)
 - 결과: / 와 /hello는 500(Circular view path), /not-exist는 404 응답 확인, 서버 콘솔에 index, hello 출력 확인
+
+### 002-02 간단한 웹 프로그램, @ResponseBody로 문자열 응답
+- [링크](https://github.com/jhs512/jsb-plus/commit/002-02)
+- 작업: index(), hello()가 String을 반환하고 @ResponseBody 적용, MockMvc 컨트롤러 테스트(MainControllerTest) 추가
+- 이유: 액션 메서드의 반환값을 HTTP 응답 본문으로 사용(14163 4강), 브라우저 대신 테스트로 응답 코드와 본문을 반복 검증
+- 결과: ./gradlew test 4건 통과(/ -> SBB, /hello -> 안녕하세요., /not-exist -> 404)
