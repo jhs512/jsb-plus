@@ -288,3 +288,9 @@
 - 작업: hibernate.default_batch_fetch_size: 100 설정
 - 이유: 목록의 질문마다 answers를 따로 조회하는 N+1(10번 추가 조회) 문제 확인, LAZY 컬렉션을 IN 절로 묶어 한 번에 조회(강의 외 추가 개선, 14163 13강의 OneToMany 사용 기준과 연결)
 - 결과: ./gradlew test 28건 통과, 목록 1페이지 SQL 로그에서 answer 조회가 question_id in (...) 1번으로 줄어듦 확인
+
+### 021-01 스프링 시큐리티, 시큐리티 도입과 SecurityFilterChain 설정
+- [링크](https://github.com/jhs512/jsb-plus/commit/021-01)
+- 작업: spring-boot-starter-security(+test) 의존성 추가, SecurityConfig: /resource/**, /h2-console/**, 그 외 모두 permitAll, H2 콘솔용 frameOptions sameOrigin, CSRF 예외, 테스트의 POST 요청에 .with(csrf()) 추가
+- 이유: 의존성만 추가하면 모든 페이지가 로그인 페이지로 리다이렉트(302 /login)되는 기본 동작 확인 후 설정(14168 46강), 교재의 AntPathRequestMatcher는 Security 7에서 제거되어 문자열 패턴 사용, CSRF: 다른 사이트가 사용자 몰래 POST 요청을 보내는 공격 방지
+- 결과: 의존성만 추가 시 GET /question/list -> 302 /login 확인, 설정 후 GET 200, 토큰 없는 POST 403 확인, th:action 폼(답변)에는 _csrf hidden 자동 삽입, action 생략 폼(질문 등록)에는 없음 확인(다음 커밋에서 처리), ./gradlew test 28건 통과
