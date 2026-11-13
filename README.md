@@ -3,7 +3,59 @@
 『점프 투 스프링부트』(SBB)를 구현하면서 장희성 강사의 14163(점프 투 스프링부트 개선), 14168(JPA·타임리프 개선) 수업 내용을 적용한 프로젝트입니다.
 
 - 진행 계획과 결정 사항: [docs/PLAN.md](docs/PLAN.md)
-- 커밋 규칙: `기능번호(3자리)-세부번호(2자리) 기능명, 작업` + 같은 이름의 태그
+- 커밋 규칙: `기능번호(3자리)-세부번호(2자리) 기능명, 작업` + 같은 이름의 태그 (예: [`016-03`](https://github.com/jhs512/jsb-plus/commit/016-03))
+
+## 기술 스택
+- Java 25, Spring Boot 4.1.2, Gradle(Kotlin DSL)
+- Spring Data JPA(Hibernate), H2(dev: 파일 DB, test: 메모리 DB)
+- Thymeleaf + Layout Dialect, Bootstrap 5.3(cdnjs), EasyMDE
+- Spring Security(폼 로그인, OAuth2 로그인), Validation, Mail, commonmark
+
+## 실행 방법
+```bash
+./gradlew bootRun     # http://localhost:8080 (dev 프로파일, 샘플 데이터 자동 생성)
+./gradlew test        # test 프로파일(메모리 DB)로 전체 테스트
+```
+- 개발용 계정: `admin`, `user1`, `user2` / 비밀번호 `1234` (BaseInitData)
+- H2 콘솔: http://localhost:8080/h2-console (JDBC URL `jdbc:h2:./db_dev;MODE=MySQL`, 사용자 `sa`)
+- 메일 발송, 구글 로그인을 쓰려면 `application-secret.yaml.template`을 `application-secret.yaml`로 복사해 값을 채웁니다. (이 파일은 `.gitignore` 대상)
+
+## 패키지 구조 (14168 방식)
+```
+com.mysite.sbb
+├── domain
+│   ├── home/home/controller          MainController (/ -> /question/list)
+│   ├── question/question             질문: entity, repository, service, controller
+│   ├── question/answer               답변
+│   ├── question/comment              댓글
+│   ├── question/category             카테고리
+│   ├── user/user                     회원, 로그인, 비밀번호, 소셜 로그인
+│   └── user/profile                  프로필
+└── global
+    ├── jpa/entity/BaseEntity         id, createDate, modifyDate, equals/hashCode
+    ├── initData                      BaseInitData(공통 샘플), DevInitData(dev 300개)
+    ├── security/SecurityConfig
+    ├── exception, markdown, mail, web(GlobalModelAttribute)
+```
+
+## 교재 대비 주요 개선
+| 항목 | 교재 | 이 프로젝트 | 근거 |
+|---|---|---|---|
+| 환경 | Boot 3.2, Groovy, properties | Boot 4.1.2, Java 25, kts, yaml | 14163 |
+| DB 설정 | DB 하나 | dev(파일)/test(메모리) 분리, SQL·바인딩 로그 | 14163 5·6강 |
+| 연관관계 | ManyToOne 기본(EAGER) | LAZY, mappedBy, cascade, orphanRemoval, batch fetch | 14163, 14168 |
+| 엔티티 | @Setter, 날짜 직접 대입 | BaseEntity + Auditing, 생성자와 의미 있는 메서드(addAnswer, modify) | 14168 |
+| 답변 저장 | answerRepository.save | question.addAnswer + 변경 감지 | 14163 21·37강 |
+| 테스트 | 실제 DB에 데이터 누적 | test 프로파일 + @Transactional 롤백, MockMvc, 테스트 73건 | 14163 18강 |
+| 폼 | class + Getter/Setter | record + @ModelAttribute("form"), 정렬된 에러 + 첫 에러 필드 focus | 14168 |
+| HTTP 메서드 | GET 삭제·추천, POST 수정 | DELETE 삭제, POST 추천, PUT 수정(_method + global.js) | 14168 41~44강 |
+| 권한 실패 | 400 | 403 | 추가 개선 |
+| 마크다운 | th:utext 그대로 | 원본 HTML 이스케이프, 위험 URL 무력화 | 14168 16강 응용 |
+| 조회 수 | - | 세션당 1회, DB에서 원자적 증가 | 추가 개선 |
+
+## 검증하지 못한 부분
+- 실제 SMTP 메일 발송(계정 필요): 메일 설정이 없으면 로그로 대체되는 것까지 확인
+- 실제 구글 로그인 완료(클라이언트 ID 필요): 가짜 client-id로 구글 인증 화면 리다이렉트까지 테스트
 
 ## 작업내역
 
@@ -456,3 +508,9 @@
 - 작업: layout.html에 EasyMDE 2.19.0(jsDelivr) CSS, JS 추가, global.js: textarea.markdown-editor를 EasyMDE로 변환(forceSync로 원래 textarea와 값 동기화), 질문 등록·수정, 답변 작성, 답변 수정 textarea에 markdown-editor 적용
 - 이유: 도전과제 3-14 마크다운 에디터 적용, 교재가 추천한 SimpleMDE는 관리가 중단되어 후속 프로젝트 EasyMDE 사용, cdnjs에 없어 jsDelivr 사용, forceSync 덕분에 기존 폼 전송, 검증 실패 시 값 유지 로직을 그대로 사용
 - 결과: ./gradlew test 73건 통과, 브라우저에서 user1로 에디터 툴바 표시, 마크다운으로 강좌 카테고리 질문 등록 -> 상세에서 소제목, 굵게, 목록 렌더링, script 태그는 문자로 표시(XSS 방지) 확인
+
+### 039-01 마무리, README에 실행 방법·구조·개선 요약 정리
+- [링크](https://github.com/jhs512/jsb-plus/commit/039-01)
+- 작업: README에 기술 스택, 실행 방법(개발용 계정, H2 콘솔, 비밀 설정), 패키지 구조, 교재 대비 개선 표, 검증하지 못한 부분 추가
+- 이유: 결과물을 처음 보는 사람도 실행하고 이해할 수 있도록, 검증 범위를 정직하게 기록
+- 결과: ./gradlew test 73건 전체 통과
