@@ -30,3 +30,9 @@
 - 작업: application.properties를 application.yaml로 변경, 콘솔 컬러 출력(ansi) 활성화
 - 이유: 계층 구조라 설정이 많아져도 읽기 쉬움(14163·14168 방식)
 - 결과: ./gradlew test 통과
+
+### 002-01 간단한 웹 프로그램, MainController와 void 액션 메서드 추가
+- [링크](https://github.com/jhs512/jsb-plus/commit/002-01)
+- 작업: MainController에 GET /, GET /hello 액션 메서드 추가(반환형 void)
+- 이유: @Controller와 @GetMapping의 URL 매핑 동작 확인, void를 반환하면 응답 본문이 없다는 점을 직접 확인(14163 3강)
+- 결과: / 와 /hello는 500(Circular view path), /not-exist는 404 응답 확인, 서버 콘솔에 index, hello 출력 확인
