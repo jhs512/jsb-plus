@@ -276,3 +276,9 @@
 - 작업: 번호 = totalElements - (number * size) - loop.index
 - 이유: loop.count는 페이지마다 1부터 다시 시작함, 최신 글이 가장 큰 번호를 갖도록 계산(교재 3-03)
 - 결과: dev DB(302개)에서 1페이지 첫 줄 302, 마지막 페이지 마지막 줄 1 확인, ./gradlew test 28건 통과
+
+### 020-01 답변 개수, 목록에 답변 개수 표시
+- [링크](https://github.com/jhs512/jsb-plus/commit/020-01)
+- 작업: 질문 제목 옆에 #lists.size(question.answers) 표시(답변이 있을 때만)
+- 이유: 목록에서 답변이 달린 질문을 바로 알아볼 수 있도록(교재 3-04)
+- 결과: ./gradlew test 28건 통과, 목록 1페이지 요청 시 SQL 로그에서 질문 10개마다 answer 조회가 1번씩, 총 10번 실행됨(N+1 문제) 확인
