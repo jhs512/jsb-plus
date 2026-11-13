@@ -246,3 +246,9 @@
 - 작업: form_errors.html 프래그먼트: 순번으로 정렬, 순번-필드명 접두어 제거 후 출력, data-error-field-name 속성, 첫 에러 필드 focus 스크립트를 document.currentScript.closest('form') + DOMContentLoaded 방식으로 구현
 - 이유: 여러 폼에서 재사용하는 에러 표시(14168 23~25강), 강사 방식(마지막 form + setTimeout)은 프래그먼트가 폼 맨 위에 있으면 입력칸이 아직 없어 콘솔 에러가 남(브라우저에서 확인 후 개선)
 - 결과: ./gradlew test 26건 통과, 브라우저: 빈 폼 제출 시 메시지 2개가 순번대로 표시, 제목만 입력 후 제출 시 입력값 유지, 커서가 내용 textarea로 이동, 콘솔 에러 없음
+
+### 016-04 질문 등록, 답변 폼에도 검증 적용
+- [링크](https://github.com/jhs512/jsb-plus/commit/016-04)
+- 작업: AnswerForm(record, @NotBlank) + @Valid, BindingResult, 검증 실패 시 question을 모델에 담아 상세 화면 다시 표시, 상세 화면 답변 폼에 th:object=answerForm, th:field, 에러 프래그먼트 적용, 빈 답변 테스트 추가
+- 이유: 빈 답변이 저장되지 않도록 서버에서 반드시 검증(14168 35강), 질문 폼과 같은 에러 표시 방식 재사용
+- 결과: ./gradlew test 27건 통과(공백 답변 -> question_detail 다시 표시, 답변 수 변화 없음)
