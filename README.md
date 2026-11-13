@@ -414,3 +414,9 @@
 - 작업: Category 엔티티(code, name), CategoryRepository, CategoryService 추가, Question.category(@ManyToOne LAZY), 생성자와 modify에 category, 검색 JPQL에 (:category is null or q.category = :category) 조건, 목록: 카테고리 탭, 배지, 페이지·검색 링크에 category 유지, 질문 폼: 카테고리 select(필수), 내비게이션 바에 카테고리 메뉴, GlobalModelAttribute에 categories, 샘플 데이터: 카테고리 3개, 샘플 질문은 qna, dev 대량 데이터는 free
 - 이유: 도전과제 3-14 카테고리 기능, 게시판 종류를 코드가 아닌 데이터(엔티티)로 관리해 추가가 쉽도록, URL에는 id 대신 의미 있는 code 사용
 - 결과: ./gradlew test 61건 통과(qna 필터에 샘플 질문, free 필터에 없음, 수정 시 카테고리 변경), 브라우저에서 카테고리 탭(전체/질문답변/자유게시판/강좌)과 질문답변 필터 결과 2건 확인
+
+### 033-01 비밀번호 변경, 로그인 사용자의 비밀번호 변경(PUT)
+- [링크](https://github.com/jhs512/jsb-plus/commit/033-01)
+- 작업: SiteUser.changePassword, UserService.matchesPassword, changePassword 추가, GET /user/password, PUT /user/password(현재 비밀번호 확인, 새 비밀번호 일치 확인), password_form.html, 성공 시 플래시 메시지(RedirectAttributes), navbar에 비밀번호 변경 링크, 테스트 2건
+- 이유: 도전과제 3-14 비밀번호 변경, 본인 확인을 위해 현재 비밀번호를 BCrypt matches로 검증, 변경은 수정이므로 PUT(PLAN 결정 2)
+- 결과: ./gradlew test 63건 통과(맞는 현재 비밀번호 -> 새 비밀번호로 matches 성공, 틀린 현재 비밀번호 -> currentPassword 에러)
