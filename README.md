@@ -258,3 +258,9 @@
 - 작업: navbar.html(th:fragment) 추가: 로고(SBB), 질문 목록 링크, 좁은 화면용 토글 버튼, layout.html에서 th:replace로 모든 페이지에 포함
 - 이유: 모든 페이지 공통 메뉴를 한 파일에서 관리(교재 3-01)
 - 결과: ./gradlew test 27건 통과, /question/list 응답에 navbar-brand 포함 확인
+
+### 018-01 페이징, Pageable로 질문 목록 페이징
+- [링크](https://github.com/jhs512/jsb-plus/commit/018-01)
+- 작업: QuestionService.getList(page): PageRequest.of(page, 10, 작성일 내림차순), 컨트롤러에서 page 파라미터(기본값 0)를 받아 Page 객체 전달, 목록 템플릿에 이전/다음, 페이지 번호(현재 기준 앞뒤 5개) 추가, 페이징 테스트 추가
+- 이유: 글이 많아져도 한 번에 10개씩만 조회(LIMIT/OFFSET)(교재 3-02), 최신 글이 먼저 보이도록 정렬
+- 결과: ./gradlew test 28건 통과(27개 중 1페이지에 최신 글, 3페이지에 가장 오래된 글)
