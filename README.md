@@ -300,3 +300,9 @@
 - 작업: question_form.html에 _csrf hidden input 직접 추가, layout.html head에 <meta name="_csrf"> 추가(이후 자바스크립트 요청용)
 - 이유: th:action을 쓰지 않는 폼은 토큰이 자동 삽입되지 않아 질문 등록이 403으로 막힘(14168 46강)
 - 결과: curl로 등록 폼에서 받은 토큰과 쿠키를 함께 보내면 302 /question/list(등록 성공) 확인, ./gradlew test 28건 통과
+
+### 022-01 회원가입, SiteUser 엔티티와 UserRepository 추가
+- [링크](https://github.com/jhs512/jsb-plus/commit/022-01)
+- 작업: SiteUser(username, password, email, username과 email은 unique) 추가, UserRepository(findByUsername, existsByUsername, existsByEmail) 추가
+- 이유: 회원 정보를 저장할 테이블(교재 3-06), user는 DB 예약어라 SiteUser로 명명
+- 결과: DDL 로그에서 site_user 테이블과 unique 제약 생성 확인, ./gradlew test 28건 통과
