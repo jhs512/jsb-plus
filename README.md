@@ -396,3 +396,9 @@
 - 작업: 컨트롤러에 kw 파라미터(기본값 빈 문자열) 추가, 모델에 kw 전달, 목록 상단에 GET 검색 폼, 질문 등록 버튼을 위로 이동, 페이지 링크를 @{/question/list(page=..., kw=...)}로 만들어 검색어 유지, 컨트롤러 검색 테스트
 - 이유: 교재 3-13 검색 화면, 교재는 숨은 폼과 자바스크립트로 page, kw를 함께 보내지만, 검색은 조회라 GET 폼으로 충분하고 링크는 타임리프 URL 파라미터 문법으로 인코딩까지 처리
 - 결과: ./gradlew test 55건 통과, 브라우저에서 [01 검색 시 테스트 데이터 [010]~[019] 10건, 검색창에 검색어 유지 확인
+
+### 030-01 답변 페이징과 정렬, 상세 화면 답변 5개씩, 최신순/추천순
+- [링크](https://github.com/jhs512/jsb-plus/commit/030-01)
+- 작업: AnswerRepository: findByQuestion(Pageable), 추천순 JPQL(order by size(a.voters) desc + countQuery), AnswerService.getList(question, page, sort), 상세 화면: answerPaging으로 출력, 정렬 select(global.js의 select[value]), 답변 페이지 링크(answerPage, answerSort 유지), AnswerServiceTest
+- 이유: 도전과제 3-14 답변 페이징과 정렬 기능, 답변이 많으면 question.answers 전체 로딩은 메모리 부담(14163 13강: 메이저급은 댓글도 페이징), 추천 수는 컬럼이 아니라 중간 테이블 크기라서 Sort 대신 JPQL size() 사용
+- 결과: ./gradlew test 56건 통과(답변 7개 -> 2페이지, 최신순 첫 답변 = 답변 7, 추천순 = 답변 3(2표), 답변 5(1표) 순)
