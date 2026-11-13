@@ -180,3 +180,9 @@
 - 작업: question_list.html 제목에 th:href="@{, /question/detail/${question.id}, }" 링크 추가
 - 이유: 목록에서 클릭해 상세로 이동(교재 2-10, 14163 35강 2단계), @{}(URL 생성)와 , , (문자열 치환) 문법 비교
 - 결과: ./gradlew test 21건 통과(목록 HTML에 href=/question/detail/2 포함)
+
+### 010-03 상세 페이지, 없는 질문에 404 응답
+- [링크](https://github.com/jhs512/jsb-plus/commit/010-03)
+- 작업: global/exception/DataNotFoundException(@ResponseStatus NOT_FOUND) 추가, getQuestion에서 findById().orElseThrow로 예외 발생, 404 테스트 추가
+- 이유: findById().get()은 값이 없으면 500(No value present)이 나와 원인을 알기 어려움, 없는 자원은 404가 의미상 정확(14163 35강 3단계)
+- 결과: ./gradlew test 22건 통과(/question/detail/999 -> 404)
