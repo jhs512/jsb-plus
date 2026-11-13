@@ -330,3 +330,9 @@
 - 작업: Question.author, Answer.author(@ManyToOne LAZY SiteUser) 추가, 생성자와 addAnswer에 author 인자, @EnableMethodSecurity + 질문 등록, 답변 등록에 @PreAuthorize("isAuthenticated()"), Principal로 로그인 사용자 조회(UserService.getUser), 샘플 데이터 글쓴이 지정, 테스트는 @WithUserDetails로 로그인 상태 실행
 - 이유: 누가 쓴 글인지 저장(교재 3-08), 로그인하지 않은 사용자는 글을 쓸 수 없게
 - 결과: ./gradlew test 39건 통과(비로그인 GET /question/create -> /user/login 리다이렉트, 등록한 질문의 author = user1)
+
+### 024-02 글쓴이, 목록과 상세에 글쓴이 표시
+- [링크](https://github.com/jhs512/jsb-plus/commit/024-02)
+- 작업: 목록에 글쓴이 열 추가, 상세의 질문, 답변 카드에 글쓴이 표시(author?.username), 비로그인 사용자에게는 답변 입력칸을 비활성화하고 안내 문구 표시
+- 이유: 누가 쓴 글인지 화면에 보여주기(교재 3-08), ?. 안전 접근으로 author가 없는 예전 데이터도 에러 없이 표시(14168 16강)
+- 결과: ./gradlew test 39건 통과, 빈 dev DB로 실행 후 상세 화면에 user1(질문), user2(답변), 비로그인 안내 문구 확인
