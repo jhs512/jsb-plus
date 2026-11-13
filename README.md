@@ -90,3 +90,9 @@
 - 작업: QuestionRepository, AnswerRepository(JpaRepository) 추가, TestInitData: ApplicationRunner 빈으로 시작 시 질문 2개, 답변 1개 생성, @Lazy self 주입으로 @Transactional 적용
 - 이유: 교재는 테스트 코드로 데이터를 넣지만, 앱 시작마다 같은 샘플 데이터가 보장되도록(14163 14강), this.work1() 직접 호출은 프록시를 거치지 않아 트랜잭션이 적용되지 않음
 - 결과: bootRun 로그에서 work1 트랜잭션 하나 안에서 count 1회, insert 3회 확인, ./gradlew test 통과
+
+### 005-02 리포지터리, findAll과 findById 테스트
+- [링크](https://github.com/jhs512/jsb-plus/commit/005-02)
+- 작업: QuestionRepositoryTest 추가(findAll, findById)
+- 이유: 샘플 데이터가 메모리 DB에 들어가는지, Repository 기본 메서드가 동작하는지 테스트로 확인(교재 2-05, 14163 15강)
+- 결과: ./gradlew test 6건 통과
