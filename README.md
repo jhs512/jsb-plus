@@ -354,3 +354,9 @@
 - 작업: AnswerService.getAnswer, modify, delete 추가, Answer.isAuthor 추가, GET/PUT /answer/modify/{id}, answer_form.html, DELETE /answer/delete/{id}, 삭제는 question.deleteAnswer(answer) -> @OneToMany orphanRemoval = true로 DELETE, BaseEntity에 id 기반 equals/hashCode(동치성 먼저 비교), 상세 화면에서 본인 답변에만 수정·삭제 버튼, 테스트 3건
 - 이유: 교재 3-09 답변 수정과 삭제, answerRepository.delete 대신 부모 컬렉션에서 제거하는 객체지향 방식(14168 37강), 리스트의 remove가 같은 id의 답변을 찾으려면 equals 재정의 필요(14168 37·38강)
 - 결과: ./gradlew test 48건 통과(본인 수정 302, 남의 답변 403, 삭제 후 answer 조회 결과 없음)
+
+### 025-04 수정과 삭제, 수정일시 표시
+- [링크](https://github.com/jhs512/jsb-plus/commit/025-04)
+- 작업: 상세 화면의 질문, 답변 카드에 modifyDate가 createDate보다 나중일 때만 modified at 배지 표시
+- 이유: 교재는 modifyDate가 null이 아니면 표시하지만, Auditing은 생성 시에도 modifyDate를 채우므로 두 시각을 비교(교재 3-09 응용)
+- 결과: ./gradlew test 48건 통과, 브라우저에서 수정한 2번 질문에만 modified at 표시, 수정하지 않은 답변에는 표시 안 됨 확인
