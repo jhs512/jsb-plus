@@ -222,3 +222,9 @@
 - 작업: 부트스트랩 5.3.8(cdnjs), Pretendard 폰트(jsDelivr)를 CDN 링크로 적용, 목록을 table 클래스, 상세를 card 클래스로 꾸밈, 본문 줄바꿈 유지(white-space: pre-line)
 - 이유: 교재는 부트스트랩 파일을 내려받아 static에 넣지만, 강사처럼 CDN 주소로 사용해 저장소를 가볍게(14163 39강), 입력한 줄바꿈이 화면에서 사라지지 않도록(14168 29강)
 - 결과: ./gradlew test 23건 통과, 브라우저에서 부트스트랩 카드 스타일 적용 확인
+
+### 015-01 표준 HTML 구조, 레이아웃 템플릿 도입
+- [링크](https://github.com/jhs512/jsb-plus/commit/015-01)
+- 작업: thymeleaf-layout-dialect 의존성 추가, layout.html(doctype, head, CDN 링크, body) 추가, 목록, 상세는 layout:decorate와 layout:fragment="content"로 본문만 작성, layout:title-pattern으로 페이지별 title(예: 질문 목록 ,  SBB)
+- 이유: 모든 페이지가 표준 HTML 구조를 갖추고, 공통 head를 한 곳에서 관리(교재 2-15), 페이지별 고유 title(14168 45강)
+- 결과: ./gradlew test 23건 통과, 응답 HTML에 doctype, <title>질문 목록 ,  SBB</title>, 부트스트랩 링크 포함 확인
