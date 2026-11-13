@@ -108,3 +108,9 @@
 - 작업: 트랜잭션 없이 question.getAnswers()에 접근하면 LazyInitializationException이 발생함을 검증하는 테스트 추가
 - 이유: LAZY는 실제로 필요할 때 SELECT 하지만, 그때 DB 연결이 열려 있어야 함을 확인(14163 25강)
 - 결과: ./gradlew test 12건 통과(예외 발생을 assertThatThrownBy로 확인)
+
+### 005-05 리포지터리, @Transactional로 LAZY 로딩과 수정·삭제 테스트
+- [링크](https://github.com/jhs512/jsb-plus/commit/005-05)
+- 작업: @Transactional 테스트로 LAZY 컬렉션 조회 성공 확인, 수정(더티체킹 + flush), 삭제, cascade REMOVE 테스트 추가
+- 이유: 테스트 메서드 전체를 트랜잭션으로 묶으면 DB 연결이 유지되고, 끝나면 롤백되어 테스트끼리 독립(14163 18·25강)
+- 결과: ./gradlew test 16건 통과, 수정 테스트 이후에도 다른 테스트가 원래 제목을 조회함(롤백 확인)
