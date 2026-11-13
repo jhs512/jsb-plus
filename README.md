@@ -420,3 +420,9 @@
 - 작업: SiteUser.changePassword, UserService.matchesPassword, changePassword 추가, GET /user/password, PUT /user/password(현재 비밀번호 확인, 새 비밀번호 일치 확인), password_form.html, 성공 시 플래시 메시지(RedirectAttributes), navbar에 비밀번호 변경 링크, 테스트 2건
 - 이유: 도전과제 3-14 비밀번호 변경, 본인 확인을 위해 현재 비밀번호를 BCrypt matches로 검증, 변경은 수정이므로 PUT(PLAN 결정 2)
 - 결과: ./gradlew test 63건 통과(맞는 현재 비밀번호 -> 새 비밀번호로 matches 성공, 틀린 현재 비밀번호 -> currentPassword 에러)
+
+### 033-02 비밀번호 변경, 비밀번호 찾기(임시 비밀번호 메일 발송)
+- [링크](https://github.com/jhs512/jsb-plus/commit/033-02)
+- 작업: spring-boot-starter-mail 추가, global/mail/MailService(JavaMailSender가 없으면 로그로 대체), UserService.resetPassword: SecureRandom 임시 비밀번호(10자)로 변경 후 메일 발송, GET/POST /user/password/reset, password_reset_form.html, 로그인 화면에 비밀번호 찾기 링크와 안내 메시지, application-secret.yaml(.gitignore) 선택적 import + application-secret.yaml.template, @MockitoBean으로 메일 발송 내용 검증 테스트 2건
+- 이유: 도전과제 3-14 비밀번호 찾기, 가입되지 않은 이메일이어도 같은 안내를 보여줘 계정 존재 여부 노출 방지, SMTP 계정 같은 비밀값은 public 저장소에 올리지 않음(PLAN 결정 4)
+- 결과: ./gradlew test 65건 통과(메일로 보낸 임시 비밀번호로 matches 성공, 기존 1234는 실패, 없는 이메일은 발송 안 함), dev 실행에서 POST /user/password/reset -> 302 /user/login, 메일 미설정 경고 로그 출력 확인, 실제 SMTP 발송은 계정 정보가 없어 검증하지 못함

@@ -1,6 +1,10 @@
 spring:
   application:
     name: sbb
+  config:
+    # 비밀 설정 파일(있을 때만 읽음). 프로젝트 루트의 application-secret.yaml, .gitignore에 등록됨
+    # 예시는 application-secret.yaml.template 참고
+    import: optional:file:./application-secret.yaml
   output:
     ansi:
       enabled: always
