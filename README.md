@@ -372,3 +372,9 @@
 - 작업: 상세 화면 답변마다 <a id="answer_{id}"> 앵커, 답변 작성, 수정, 추천 후 /question/detail/{질문id}#answer_{답변id}로 redirect, 답변 작성 시 flush로 INSERT를 먼저 실행해 새 답변 id 확보
 - 이유: 답변이 많을 때 페이지 맨 위로 돌아가지 않고 방금 작업한 답변으로 스크롤(교재 3-11), addAnswer 방식은 트랜잭션 종료 시 INSERT라서 그 전에는 id가 0(14163 21강에서 본 동작)
 - 결과: ./gradlew test 50건 통과(작성·수정·추천은 #answer_* 패턴, 삭제는 앵커 없이 상세로)
+
+### 028-01 마크다운, commonmark로 질문·답변 본문 렌더링
+- [링크](https://github.com/jhs512/jsb-plus/commit/028-01)
+- 작업: commonmark 0.24.0 의존성 추가, global/markdown/MarkdownService(render) 추가, @ControllerAdvice GlobalModelAttribute로 모든 템플릿에 markdown 변수 등록, 상세 화면 본문을 th:utext="${markdown.render(...)}"로 출력, MarkdownServiceTest 2건
+- 이유: 본문에 제목, 목록, 굵게 등 서식 사용(교재 3-12), 교재의 ${@빈.메서드()} 방식은 Thymeleaf 3.1.5에서 TemplateProcessingException으로 막혀서 공통 모델 속성으로 전달(14168 19강), [실험] 입력 속 <script>가 그대로 HTML이 되는 것을 테스트로 확인(다음 커밋에서 막음)
+- 결과: ./gradlew test 52건 통과(마크다운 -> h1, strong, li 변환, script 태그가 그대로 통과함을 확인)
