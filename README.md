@@ -216,3 +216,9 @@
 - 작업: static/resource/style.css 추가(textarea 너비, 버튼 여백), 목록, 상세 템플릿에서 th:href="@{/resource/style.css}"로 연결
 - 이유: 정적 파일(CSS, JS, 이미지)은 static 폴더에서 그대로 제공됨(교재 2-13), 나중에 시큐리티에서 /resource/** 한 줄로 허용하기 위해 처음부터 resource 하위에 둠(14168 46강)
 - 결과: 앱 재시작 후 /resource/style.css 200 응답 확인, ./gradlew test 23건 통과
+
+### 014-01 부트스트랩, cdnjs로 부트스트랩과 Pretendard 폰트 적용
+- [링크](https://github.com/jhs512/jsb-plus/commit/014-01)
+- 작업: 부트스트랩 5.3.8(cdnjs), Pretendard 폰트(jsDelivr)를 CDN 링크로 적용, 목록을 table 클래스, 상세를 card 클래스로 꾸밈, 본문 줄바꿈 유지(white-space: pre-line)
+- 이유: 교재는 부트스트랩 파일을 내려받아 static에 넣지만, 강사처럼 CDN 주소로 사용해 저장소를 가볍게(14163 39강), 입력한 줄바꿈이 화면에서 사라지지 않도록(14168 29강)
+- 결과: ./gradlew test 23건 통과, 브라우저에서 부트스트랩 카드 스타일 적용 확인
