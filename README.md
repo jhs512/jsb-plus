@@ -402,3 +402,9 @@
 - 작업: AnswerRepository: findByQuestion(Pageable), 추천순 JPQL(order by size(a.voters) desc + countQuery), AnswerService.getList(question, page, sort), 상세 화면: answerPaging으로 출력, 정렬 select(global.js의 select[value]), 답변 페이지 링크(answerPage, answerSort 유지), AnswerServiceTest
 - 이유: 도전과제 3-14 답변 페이징과 정렬 기능, 답변이 많으면 question.answers 전체 로딩은 메모리 부담(14163 13강: 메이저급은 댓글도 페이징), 추천 수는 컬럼이 아니라 중간 테이블 크기라서 Sort 대신 JPQL size() 사용
 - 결과: ./gradlew test 56건 통과(답변 7개 -> 2페이지, 최신순 첫 답변 = 답변 7, 추천순 = 답변 3(2표), 답변 5(1표) 순)
+
+### 031-01 댓글, 질문·답변 댓글 작성과 삭제
+- [링크](https://github.com/jhs512/jsb-plus/commit/031-01)
+- 작업: Comment 엔티티(author, content, question 또는 answer) 추가, Question, Answer에 comments(@OneToMany PERSIST, REMOVE, orphanRemoval)와 addComment, deleteComment, CommentController: POST /comment/create/question/{id}, /comment/create/answer/{id}, DELETE /comment/delete/{id}, comment_fragment.html(질문, 답변 공용) + global.js의 Comment__submitWriteForm 클라이언트 검증, CommentControllerTest 4건
+- 이유: 도전과제 3-14 댓글 기능, 14168 PostComment 방식(엔티티 메서드로 추가, 부모 목록에서 제거하면 orphanRemoval로 삭제), 클라이언트 검증은 빠른 피드백, 서버 검증은 필수(14168 35·36강)
+- 결과: ./gradlew test 60건 통과(질문 댓글 표시, 답변 댓글 후 #answer_1 이동, 빈 댓글 400, 남의 댓글 삭제 403, 본인 삭제 후 DB에서 사라짐)
