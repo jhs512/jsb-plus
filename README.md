@@ -120,3 +120,9 @@
 - 작업: Question.addAnswer(content) 엔티티 메서드 추가, TestInitData의 답변 생성을 addAnswer로 변경, AnswerRepositoryTest: save 방식, addAnswer 방식, 양방향 조회 테스트
 - 이유: 교재는 answerRepository.save를 사용, 강사는 객체지향적으로 question.addAnswer + cascade PERSIST(더티체킹으로 자동 INSERT) 사용(14163 21강)
 - 결과: ./gradlew test 19건 통과, addAnswer 직후 id=0, flush 후 id 생성되는 것으로 INSERT 시점 확인
+
+### 006-01 도메인별 분류, 14168 방식 패키지 구조로 이동
+- [링크](https://github.com/jhs512/jsb-plus/commit/006-01)
+- 작업: domain/{주제}/{엔티티}/{entity,repository,controller} 구조로 이동(question/question, question/answer, home/home), 공통 코드는 global/{jpa,initData}로 이동, 테스트도 같은 패키지 구조로 이동
+- 이유: 기능이 늘어나도 파일 위치를 예측할 수 있도록 도메인 코드와 앱 전체 설정을 분리(14168 패키지 구조, PLAN 결정 1), 교재 2-06의 도메인별 분류를 한 단계 더 세분화
+- 결과: ./gradlew test 19건 통과(이동만 했으므로 동작 변화 없음)
