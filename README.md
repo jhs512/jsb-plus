@@ -138,3 +138,9 @@
 - 작업: QuestionController에 GET /question/list 추가, 자바 문자열로 ul, li HTML을 직접 만들어 응답, 컨트롤러 테스트 추가
 - 이유: 템플릿 엔진 없이 HTML을 만들면 얼마나 불편한지 먼저 경험(14163 27강)
 - 결과: ./gradlew test 20건 통과(목록에 샘플 질문 제목 2개 포함)
+
+### 007-02 질문 목록, 타임리프 도입과 Model로 데이터 전달
+- [링크](https://github.com/jhs512/jsb-plus/commit/007-02)
+- 작업: thymeleaf 의존성 추가, templates/question_list.html에서 th:each, th:text로 목록 출력, Model.addAttribute로 questionList 전달, dev 프로파일에서 타임리프 캐시 끄기, 소스 폴더 템플릿 직접 읽기
+- 이유: HTML은 템플릿이, 데이터 준비는 컨트롤러가 맡도록 역할 분리(교재 2-07, 14163 28·30·31강), 템플릿 수정 후 재시작 없이 확인(14163 29강)
+- 결과: ./gradlew test 20건 통과(같은 테스트가 템플릿 방식에서도 통과)
